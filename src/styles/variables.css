@@ -1,0 +1,24 @@
+:root {
+    /* Color scheme */
+    --primary-dark-blue: #10151F;
+    --primary-orange: #FF4000;
+
+    --secondary-dark-blue: #3E424A;
+    --white: #fff;
+
+    /* Typography */
+    --heading-lg: 4.2rem;
+    --heading-md: 3.2rem;
+    --heading-sm: 2.4rem;
+
+    --txt-reg-xl: 2rem;
+    --txt-reg-lg: 1.8rem;
+    --txt-reg-md: 1.6rem;
+     --txt-reg-sm: 1.2rem;
+
+    /* button radius */
+    --btn-radius-lg: 2.2rem;
+    --btn-radius-md: 1rem;
+    --btn-radius-sm: 0.8rem;
+    --btn-radius-xs: 0.4rem;
+}
