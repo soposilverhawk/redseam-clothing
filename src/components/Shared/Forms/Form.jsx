@@ -40,7 +40,12 @@ function Form({ variant }) {
         );
     }
   };
-  return <div>{renderForm()}</div>;
+  return (
+    <div className={styles.formWrapper}>
+      <h1>{variant === "login" ? "Log in" : "Registration"}</h1>
+      {renderForm()}
+    </div>
+  );
 }
 
 export default Form;
