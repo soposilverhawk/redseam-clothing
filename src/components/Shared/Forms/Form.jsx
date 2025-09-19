@@ -8,7 +8,7 @@ function Form({ variant }) {
       case "login":
         return (
           <>
-            <form action="">
+            <form action="" className={styles.form}>
               <input type="email" placeholder="Email *" required />
               <input type="password" placeholder="Password *" required />
               <ActionBtn size="small">Log in</ActionBtn>
@@ -21,7 +21,7 @@ function Form({ variant }) {
       case "registration":
         return (
           <>
-            <form action="">
+            <form action="" className={styles.form}>
               <input type="file" />
               <input type="text" placeholder="Username *" required />
               <input type="email" placeholder="Email *" required />

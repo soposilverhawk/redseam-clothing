@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+.form input:not([type="file"]) {
+  padding: 1rem 1.2rem;
+  border-radius: var(--btn-radius-sm);
+  border: 1px solid var(--secondary-gray);
+  font-size: 1.4rem;
+}
+.form input::placeholder {
+    color: var(--secondary-dark-blue);
+}
+.form button {
+    margin-top: 2.2rem;
+}
+.form input[type="file"] {
+    margin-bottom: 2.2rem;
+}

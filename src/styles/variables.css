@@ -4,6 +4,7 @@
     --primary-orange: #FF4000;
     --primary-gray: #F8F6F7;
     --secondary-dark-blue: #3E424A;
+    --secondary-gray: #E1DFE1;
     --white: #fff;
 
     /* Typography */
@@ -21,4 +22,6 @@
     --btn-radius-md: 1rem;
     --btn-radius-sm: 0.8rem;
     --btn-radius-xs: 0.4rem;
+
+    /* Note for self: change radius variable names later for better convenience */
 }
