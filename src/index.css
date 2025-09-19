@@ -109,7 +109,6 @@ section {
 }
 body {
   line-height: 1;
-  font-size: 10px;
   font-family: "Poppins", sans-serif;
 }
 ol,
@@ -137,4 +136,7 @@ a {
 }
 a:hover {
   text-decoration: underline;
+}
+html {
+  font-size: 10px;
 }

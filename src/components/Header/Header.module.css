@@ -1,0 +1,27 @@
+.header,
+.logoContainer,
+.userPanelContainer,
+.userPanelContainer button {
+    display: flex;
+    align-items: center;
+}
+.logoContainer,
+.userPanelContainer button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.logoContainer,
+.userPanelContainer button {
+    gap: 0.8rem;
+}
+.header {
+    justify-content: space-between;
+}
+.logoContainer {
+    font-size: var(--txt-reg-md);
+    font-weight: 600;
+}
+.userPanelContainer {
+    gap: 2rem;
+}
