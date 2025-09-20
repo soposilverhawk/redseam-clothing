@@ -58,3 +58,11 @@
 .inputWrapper input:focus + .placeholder {
   display: none;
 }
+.passwordVisibilityToggle {
+  position: absolute;
+  right: 1.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0F172A;
+  cursor: pointer;
+}

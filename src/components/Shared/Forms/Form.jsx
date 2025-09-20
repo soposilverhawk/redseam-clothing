@@ -1,6 +1,9 @@
 import React from "react";
 import styles from "./Form.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+
 
 function Form({ variant }) {
   const renderForm = () => {
@@ -21,6 +24,7 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Password <span className={styles.required}>*</span>
                 </span>
+                <FontAwesomeIcon icon={faEye} className={styles.passwordVisibilityToggle}/>
               </div>
               <ActionBtn size="small">Log in</ActionBtn>
             </form>
@@ -51,6 +55,7 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Password <span className={styles.required}>*</span>
                 </span>
+                <FontAwesomeIcon icon={faEye} className={styles.passwordVisibilityToggle}/>
               </div>
               <div className={styles.inputWrapper}>
                 <input
@@ -61,6 +66,7 @@ function Form({ variant }) {
               <span className={styles.placeholder}>
                 Confirm Password <span className={styles.required}>*</span>
               </span>
+              <FontAwesomeIcon icon={faEye} className={styles.passwordVisibilityToggle}/>
               </div>
               <ActionBtn size="small">Register</ActionBtn>
             </form>
