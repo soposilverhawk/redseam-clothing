@@ -9,8 +9,19 @@ function Form({ variant }) {
         return (
           <>
             <form action="" className={styles.form}>
-              <input type="email" placeholder="Email *" required />
-              <input type="password" placeholder="Password *" required />
+              <div className={styles.inputWrapper}>
+                <input type="email" required placeholder="" />
+                <span className={styles.placeholder}>
+                  Email <span className={styles.required}>*</span>
+                </span>
+              </div>
+
+              <div className={styles.inputWrapper}>
+                <input type="password" required placeholder="" />
+                <span className={styles.placeholder}>
+                  Password <span className={styles.required}>*</span>
+                </span>
+              </div>
               <ActionBtn size="small">Log in</ActionBtn>
             </form>
             <p>
@@ -23,14 +34,34 @@ function Form({ variant }) {
           <>
             <form action="" className={styles.form}>
               <input type="file" />
-              <input type="text" placeholder="Username *" required />
-              <input type="email" placeholder="Email *" required />
-              <input type="password" placeholder="Password *" required />
-              <input
+              <div className={styles.inputWrapper}>
+                <input type="text" required placeholder="" />
+                <span className={styles.placeholder}>
+                  Username <span className={styles.required}>*</span>
+                </span>
+              </div>
+              <div className={styles.inputWrapper}>
+                <input type="email" required placeholder="" />
+                <span className={styles.placeholder}>
+                  Email <span className={styles.required}>*</span>
+                </span>
+              </div>
+              <div className={styles.inputWrapper}>
+                <input type="password" required placeholder="" />
+                <span className={styles.placeholder}>
+                  Password <span className={styles.required}>*</span>
+                </span>
+              </div>
+              <div className={styles.inputWrapper}>
+                <input
                 type="password"
-                placeholder="Confirm password *"
+                placeholder=""
                 required
               />
+              <span className={styles.placeholder}>
+                Confirm Password <span className={styles.required}>*</span>
+              </span>
+              </div>
               <ActionBtn size="small">Register</ActionBtn>
             </form>
             <p>
