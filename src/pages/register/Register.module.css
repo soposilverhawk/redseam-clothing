@@ -1,0 +1,7 @@
+.section {
+    height: 100vh;
+    display: flex;
+    gap: 17.3rem;
+    align-items: center;
+    margin-top: 1.8rem;
+}
