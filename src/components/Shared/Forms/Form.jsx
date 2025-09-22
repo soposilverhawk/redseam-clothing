@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/Routes";
-import AvatarUpload from "../../Shared/avatarUpload/AvatarUpload";
+import AvatarUpload from "../../avatarUpload/AvatarUpload";
 
 function Form({ variant }) {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import styles from "./AvatarUpload.module.css";
-import cameraIcon from "../../../assets/camera.png";
+import cameraIcon from "../../assets/camera.png";
 
 function AvatarUpload() {
   const [avatar, setAvatar] = useState(null); // current avatar image
