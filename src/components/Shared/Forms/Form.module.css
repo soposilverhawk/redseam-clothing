@@ -66,3 +66,14 @@
   color: #0F172A;
   cursor: pointer;
 }
+.membershipMessage {
+  font-size: 1.4rem;
+  margin: 0 auto;
+}
+.membershipMessage span {
+  color: var(--primary-orange);
+  cursor: pointer;
+}
+.membershipMessage span:hover {
+  text-decoration: underline;
+}

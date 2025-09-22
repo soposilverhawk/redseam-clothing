@@ -104,7 +104,7 @@ function Form({ variant }) {
               </div>
               <ActionBtn size="small">Log in</ActionBtn>
             </form>
-            <p>
+            <p className={styles.membershipMessage}>
               Not a member? <span>Register</span>
             </p>
           </>
@@ -150,7 +150,7 @@ function Form({ variant }) {
               </div>
               <ActionBtn size="small">Register</ActionBtn>
             </form>
-            <p>
+            <p className={styles.membershipMessage}>
               Already member? <span>Log in</span>
             </p>
           </>
