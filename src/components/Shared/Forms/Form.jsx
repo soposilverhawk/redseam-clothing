@@ -6,6 +6,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/Routes";
 import AvatarUpload from "../../avatarUpload/AvatarUpload";
+import axios from "axios";
 
 function Form({ variant }) {
   const navigate = useNavigate();
@@ -59,7 +60,8 @@ function Form({ variant }) {
     }
 
     if (registrationData.password !== registrationData.confirmPassword) {
-      errors.passwordMatch = "Confirmation password does not match the password";
+      errors.passwordMatch =
+        "Confirmation password does not match the password";
     }
 
     return errors;
@@ -77,46 +79,79 @@ function Form({ variant }) {
     setValidationErrors({});
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "https://api.redseam.redberryinternship.ge/api/login",
         {
-          method: "POST",
+          email: loginData.email,
+          password: loginData.password,
+        },
+        {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify({
-            email: loginData.email,
-            password: loginData.password,
-          }),
         }
       );
 
-      const data = await response.json();
-      if (response.ok) {
-        // SUCCESS
-        localStorage.setItem("token", data.token);
-        setLoginSubmittedData({ success: "Logged in successfully" });
-        setLoginData({ email: "", password: "" });
-      } else {
-        // FAILURE
-        setLoginSubmittedData({ error: data.message });
-      }
-
-      // Clear the form
+      // SUCCESS
+      localStorage.setItem("token", response.data.token);
+      setLoginSubmittedData({ success: "Logged in successfully" });
       setLoginData({ email: "", password: "" });
     } catch (error) {
-      console.error("Error logging in:", error);
+      if (error.response) {
+        setLoginSubmittedData({ error: error.response.data.message });
+      } else {
+        console.error("Error logging in:", error);
+      }
     }
   };
+
   const handleRegistrationSubmit = async (event) => {
     event.preventDefault();
 
     const errors = validateInputs();
-    if(errors.passwordMatch) {
+    if (errors.passwordMatch) {
       setValidationErrors(errors);
-      return
-    } 
+      return;
+    }
+
+    setValidationErrors({});
+
+    const formData = new FormData();
+    if (registrationData.avatar) {
+      formData.append("avatar", registrationData.avatar);
+    }
+    formData.append("username", registrationData.username);
+    formData.append("email", registrationData.email);
+    formData.append("password", registrationData.password);
+    formData.append("password_confirmation", registrationData.confirmPassword);
+
+    try {
+      const response = await axios.post(
+        "https://api.redseam.redberryinternship.ge/api/register",
+        formData,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      console.log("Registration successful", response.data);
+
+      setRegistrationData({
+        avatar: null,
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      if (error.response) {
+        console.error("Registration failed:", error.response.data);
+      } else {
+        console.error("Error submitting registration:", error.message);
+      }
+    }
   };
   const renderForm = () => {
     switch (variant) {
@@ -247,7 +282,9 @@ function Form({ variant }) {
                   onClick={() => togglePaswordVisibility("confirmPassword")}
                 />
                 {validationErrors.passwordMatch && (
-                  <p className={styles.errorMsg}>{validationErrors.passwordMatch}</p>
+                  <p className={styles.errorMsg}>
+                    {validationErrors.passwordMatch}
+                  </p>
                 )}
               </div>
               <ActionBtn size="small">Register</ActionBtn>
