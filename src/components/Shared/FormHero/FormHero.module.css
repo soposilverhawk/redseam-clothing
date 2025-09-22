@@ -1,0 +1,6 @@
+.heroContainer {
+    max-width: 94.8rem;
+    height: 100vh;
+    background: url("../../../assets/form-hero.png");
+    background-position: 10% 0;
+}
