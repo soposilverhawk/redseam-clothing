@@ -9,6 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .userControlsContainer {
   display: flex;
@@ -28,7 +29,7 @@
   cursor: pointer;
 }
 .userControlsContainer p {
-    font-size: var(--txt-reg-sm);
+  font-size: var(--txt-reg-sm);
 }
 .productsContainer {
   margin-top: 3.2rem;
@@ -62,4 +63,68 @@
 .productsContainer button:hover {
   transform: scale(1.1);
   transition: 0.2s ease-in;
+}
+.inputsGroupping {
+  display: flex;
+  gap: 1rem;
+}
+.filtersContainer {
+  max-width: 39.2rem;
+  padding: 1.6rem 2.5rem;
+  position: absolute;
+  right: 12rem;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  z-index: 9999;
+  background-color: var(--white);
+  border-radius: var(--btn-radius-sm);
+  border: 1px solid var(--secondary-gray);
+}
+.filtersContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-end;
+}
+.filtersContainer p {
+  font-size: var(--txt-reg-md);
+  font-weight: 600;
+}
+.fieldset {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.inputWrapper {
+  position: relative;
+}
+.inputWrapper input {
+  border: 1px solid var(--secondary-gray);
+  border-radius: var(--btn-radius-sm);
+  padding: 1.2rem;
+  font-size: 1.4rem;
+}
+.inputWrapper .placeholder {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--secondary-dark-blue);
+  font-size: 1.4rem;
+}
+
+/* required star styling */
+.inputWrapper .placeholder .required {
+  color: var(--primary-orange);
+  margin-left: 0.2rem;
+}
+
+/* hide placeholder when typing */
+.inputWrapper input:not(:placeholder-shown) + .placeholder,
+.inputWrapper input:focus + .placeholder {
+  display: none;
 }
