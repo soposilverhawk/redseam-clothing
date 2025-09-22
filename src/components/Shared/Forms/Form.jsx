@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./Form.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faListNumeric } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../../routes/Routes";
 
 function Form({ variant }) {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -105,7 +108,7 @@ function Form({ variant }) {
               <ActionBtn size="small">Log in</ActionBtn>
             </form>
             <p className={styles.membershipMessage}>
-              Not a member? <span>Register</span>
+              Not a member? <span onClick={() => navigate(ROUTES.REGISTER)}>Register</span>
             </p>
           </>
         );
@@ -151,7 +154,7 @@ function Form({ variant }) {
               <ActionBtn size="small">Register</ActionBtn>
             </form>
             <p className={styles.membershipMessage}>
-              Already member? <span>Log in</span>
+              Already member? <span onClick={() => navigate(ROUTES.LOGIN)}>Log in</span>
             </p>
           </>
         );
