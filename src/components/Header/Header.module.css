@@ -17,6 +17,7 @@
 }
 .header {
     justify-content: space-between;
+    padding: 1rem 10rem;
 }
 .logoContainer {
     font-size: var(--txt-reg-md);
