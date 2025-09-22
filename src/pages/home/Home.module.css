@@ -1,0 +1,65 @@
+.productsSection {
+  margin-top: 7.2rem;
+}
+.productsSection h1 {
+  font-size: var(--heading-lg);
+  font-weight: 600;
+}
+.productsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.userControlsContainer {
+  display: flex;
+  align-items: center;
+  gap: 6.4rem;
+}
+.userControlsContainer button {
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.userControlsContainer select {
+  border: none;
+  width: 7rem;
+  cursor: pointer;
+}
+.userControlsContainer p {
+    font-size: var(--txt-reg-sm);
+}
+.productsContainer {
+  margin-top: 3.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: (3, auto);
+  gap: 4.8rem 2.4rem;
+}
+.productsContainer button {
+  max-width: 41.2rem;
+  width: 100%;
+  border: none;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: var(--txt-reg-lg);
+  box-shadow: 10px 5px 5px var(--secondary-gray);
+}
+.productsContainer button img {
+  width: 100%;
+}
+.productInformation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: start;
+}
+.productsContainer button:hover {
+  transform: scale(1.1);
+  transition: 0.2s ease-in;
+}
