@@ -78,3 +78,8 @@
 .membershipMessage span:hover {
   text-decoration: underline;
 }
+.errorMsg {
+  color: red;
+  position: absolute;
+  bottom: -2rem;
+}

@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import styles from "./AvatarUpload.module.css";
 import cameraIcon from "../../assets/camera.png";
 
-function AvatarUpload() {
+function AvatarUpload({ onFileSelect }) {
   const [avatar, setAvatar] = useState(null); // current avatar image
   const fileInputRef = useRef(null);
 
@@ -11,12 +11,14 @@ function AvatarUpload() {
     if (file) {
       const url = URL.createObjectURL(file);
       setAvatar(url);
+      onFileSelect(file);
     }
   };
 
   const handleRemove = () => {
     setAvatar(null);
     fileInputRef.current.value = null;
+    onFileSelect(null);
   };
 
   const handleUploadClick = () => {
