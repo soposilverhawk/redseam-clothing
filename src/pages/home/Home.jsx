@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import filtersIcon from "../../assets/filters-icon.png";
 import useProducts from "../../custom-hooks/useProducts";
 import styles from "./Home.module.css";
+import ProductControls from "../../components/ProductControls/ProductControls";
 
 function Home() {
-  const { data, loading, error } = useProducts({ page: 1 });
+  const [page, setPage] = useState(1)
+  const { data, loading, error } = useProducts({ page });
   useEffect(() => {
     if (data) console.log(data);
   }, [data]);
@@ -45,6 +47,7 @@ function Home() {
           </button>
         ))}
       </div>
+      <ProductControls data={data} setPage={setPage} activePage={page}/>
     </section>
   );
 }
