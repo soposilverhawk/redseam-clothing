@@ -1,0 +1,38 @@
+.container {
+  border-radius: var(--btn-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.avatarWrapper {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  border: 1px solid var(--secondary-gray);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.placeholder {
+  font-size: 2rem;
+  color: "#aaa";
+}
+.buttons {
+  display: flex;
+  gap: 0.5rem
+}
+.button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--btn-radius-xs);
+  background: #fff;
+  color: var(--primary-dark-blue);
+  cursor: pointer;
+}

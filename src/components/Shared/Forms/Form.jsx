@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./Form.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/Routes";
+import AvatarUpload from "../../Shared/avatarUpload/AvatarUpload";
 
 function Form({ variant }) {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function Form({ variant }) {
       ...prev,
       [field]: !prev[field],
     }));
-  }
+  };
   const handleLoginChange = (event) => {
     const { name } = event.target;
     setLoginData((prev) => ({
@@ -108,15 +109,16 @@ function Form({ variant }) {
               <ActionBtn size="small">Log in</ActionBtn>
             </form>
             <p className={styles.membershipMessage}>
-              Not a member? <span onClick={() => navigate(ROUTES.REGISTER)}>Register</span>
+              Not a member?{" "}
+              <span onClick={() => navigate(ROUTES.REGISTER)}>Register</span>
             </p>
           </>
         );
       case "registration":
         return (
           <>
-            <form action="" className={styles.form}>
-              <input type="file" />
+            <form className={styles.form}>
+              <AvatarUpload />
               <div className={styles.inputWrapper}>
                 <input type="text" required placeholder="" />
                 <span className={styles.placeholder}>
@@ -130,7 +132,12 @@ function Form({ variant }) {
                 </span>
               </div>
               <div className={styles.inputWrapper}>
-                <input type={showPassword.password ? "text" : "password"} required placeholder="" name="password"/>
+                <input
+                  type={showPassword.password ? "text" : "password"}
+                  required
+                  placeholder=""
+                  name="password"
+                />
                 <span className={styles.placeholder}>
                   Password <span className={styles.required}>*</span>
                 </span>
@@ -141,7 +148,12 @@ function Form({ variant }) {
                 />
               </div>
               <div className={styles.inputWrapper}>
-                <input type={showPassword.confirmPassword ? "text" : "password"} placeholder="" required name="confirmPassword"/>
+                <input
+                  type={showPassword.confirmPassword ? "text" : "password"}
+                  placeholder=""
+                  required
+                  name="confirmPassword"
+                />
                 <span className={styles.placeholder}>
                   Confirm Password <span className={styles.required}>*</span>
                 </span>
@@ -154,7 +166,8 @@ function Form({ variant }) {
               <ActionBtn size="small">Register</ActionBtn>
             </form>
             <p className={styles.membershipMessage}>
-              Already member? <span onClick={() => navigate(ROUTES.LOGIN)}>Log in</span>
+              Already member?{" "}
+              <span onClick={() => navigate(ROUTES.LOGIN)}>Log in</span>
             </p>
           </>
         );
