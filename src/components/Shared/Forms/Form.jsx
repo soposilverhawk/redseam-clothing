@@ -10,7 +10,6 @@ function Form({ variant }) {
     password: "",
   });
   const [loginSubmittedData, setLoginSubmittedData] = useState(null);
-  const [isLoginSubmitted, setIsLoginSubmitted] = useState(false);
   const handleLoginChange = (event) => {
     const { name } = event.target;
     setLoginData((prev) => ({
@@ -18,29 +17,48 @@ function Form({ variant }) {
       [name]: event.target.value,
     }));
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoginSubmittedData(loginData);
-    setLoginData({
-      email: "",
-      password: "",
-    });
-  };
-  useEffect(() => {
-    if (loginSubmittedData) {
-      console.log("Submitted data", loginSubmittedData);
+
+    try {
+      const response = await fetch(
+        "https://api.redseam.redberryinternship.ge/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            email: loginData.email,
+            password: loginData.password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        // SUCCESS
+        localStorage.setItem("token", data.token);
+        setLoginSubmittedData({ success: "Logged in successfully" });
+        setLoginData({ email: "", password: "" });
+      } else {
+        // FAILURE
+        setLoginSubmittedData({ error: data.message });
+      }
+
+      // Clear the form
+      setLoginData({ email: "", password: "" });
+    } catch (error) {
+      console.error("Error logging in:", error);
     }
-  }, [loginSubmittedData]);
+  };
   const renderForm = () => {
     switch (variant) {
       case "login":
         return (
           <>
-            <form
-              action=""
-              className={styles.form}
-              onSubmit={(e) => handleSubmit(e)}
-            >
+            <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
               <div className={styles.inputWrapper}>
                 <input
                   type="email"
@@ -129,6 +147,12 @@ function Form({ variant }) {
     <div className={styles.formWrapper}>
       <h1>{variant === "login" ? "Log in" : "Registration"}</h1>
       {renderForm()}
+      {loginSubmittedData?.error && (
+        <p className={styles.errorMsg}>{loginSubmittedData.error}</p>
+      )}
+      {loginSubmittedData?.success && (
+        <p className={styles.successMsg}>{loginSubmittedData.success}</p>
+      )}
     </div>
   );
 }
