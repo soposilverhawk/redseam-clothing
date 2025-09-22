@@ -6,6 +6,8 @@ import ProductControls from "../../components/ProductControls/ProductControls";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 
 function Home() {
+  // fix pagination visuals and issue when there are much less items than pages
+  // fix the sort and filter to work together coherently
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [filtersInput, setFiltersInput] = useState({
@@ -16,10 +18,12 @@ function Home() {
     priceFrom: 100,
     priceTo: 500,
   });
+  const [sortBy, setSortBy] = useState("");
   const { data, loading, error } = useProducts({
     page,
     priceFrom: appliedFilters.priceFrom,
     priceTo: appliedFilters.priceTo,
+    sortBy
   });
   const filteredProducts = data?.data?.filter(
     (item) =>
@@ -37,6 +41,10 @@ function Home() {
     setAppliedFilters(filtersInput);
     setShowFilters(false);
   };
+
+  const handleSortChange = (event) => {
+    setSortBy(event.target.value);
+  }
   useEffect(() => {
     if (data) console.log(data);
   }, [data]);
@@ -98,12 +106,12 @@ function Home() {
             <img src={filtersIcon} alt="Filters option icon" />
             Filter
           </button>
-          <select name="sorting" id="sorting">
+          <select name="sorting" id="sorting" onChange={handleSortChange}>
             {/* handle values once you'll move onto sorting functionality */}
-            <option value="">Sort by</option>
-            <option value="">New products first</option>
-            <option value="">Price, low to high</option>
-            <option value="">Price, high to low</option>
+            <option value="price">Sort by</option>
+            <option value="created_at">New products first</option>
+            <option value="price">Price, low to high</option>
+            <option value="-price">Price, high to low</option>
           </select>
         </div>
       </div>
