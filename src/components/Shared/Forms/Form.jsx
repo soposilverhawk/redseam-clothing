@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Form.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faListNumeric } from "@fortawesome/free-solid-svg-icons";
 
 function Form({ variant }) {
   const [loginData, setLoginData] = useState({
@@ -10,6 +10,17 @@ function Form({ variant }) {
     password: "",
   });
   const [loginSubmittedData, setLoginSubmittedData] = useState(null);
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
+  const togglePaswordVisibility = (field) => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  }
   const handleLoginChange = (event) => {
     const { name } = event.target;
     setLoginData((prev) => ({
@@ -75,7 +86,7 @@ function Form({ variant }) {
 
               <div className={styles.inputWrapper}>
                 <input
-                  type="password"
+                  type={showPassword.password ? "text" : "password"}
                   required
                   placeholder=""
                   name="password"
@@ -88,6 +99,7 @@ function Form({ variant }) {
                 <FontAwesomeIcon
                   icon={faEye}
                   className={styles.passwordVisibilityToggle}
+                  onClick={() => togglePaswordVisibility("password")}
                 />
               </div>
               <ActionBtn size="small">Log in</ActionBtn>
@@ -115,23 +127,25 @@ function Form({ variant }) {
                 </span>
               </div>
               <div className={styles.inputWrapper}>
-                <input type="password" required placeholder="" />
+                <input type={showPassword.password ? "text" : "password"} required placeholder="" name="password"/>
                 <span className={styles.placeholder}>
                   Password <span className={styles.required}>*</span>
                 </span>
                 <FontAwesomeIcon
                   icon={faEye}
                   className={styles.passwordVisibilityToggle}
+                  onClick={() => togglePaswordVisibility("password")}
                 />
               </div>
               <div className={styles.inputWrapper}>
-                <input type="password" placeholder="" required />
+                <input type={showPassword.confirmPassword ? "text" : "password"} placeholder="" required name="confirmPassword"/>
                 <span className={styles.placeholder}>
                   Confirm Password <span className={styles.required}>*</span>
                 </span>
                 <FontAwesomeIcon
                   icon={faEye}
                   className={styles.passwordVisibilityToggle}
+                  onClick={() => togglePaswordVisibility("confirmPassword")}
                 />
               </div>
               <ActionBtn size="small">Register</ActionBtn>
