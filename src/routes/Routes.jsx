@@ -2,7 +2,7 @@ const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
-  PRODUCTPAGE: "/product-page",
+  PRODUCTPAGE: "/product/:id",
   CHECKOUT: "/checkout"
 };
 

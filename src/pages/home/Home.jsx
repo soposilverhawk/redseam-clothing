@@ -5,8 +5,13 @@ import styles from "./Home.module.css";
 import ProductControls from "../../components/ProductControls/ProductControls";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import removeIcon from "../../assets/close-icon.png";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../routes/Routes";
 
 function Home() {
+  // handle edge case of user selecting only one filter instead of range
+  // handle loading and error logics for data
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [filtersInput, setFiltersInput] = useState({
@@ -139,7 +144,7 @@ function Home() {
 
       <div className={styles.productsContainer}>
         {data?.data?.map(({ id, cover_image, name, description, price }) => (
-          <button key={id}>
+          <button key={id} onClick={() => navigate(ROUTES.PRODUCTPAGE.replace(":id", id))}>
             <img src={cover_image} alt={description} />
             <div className={styles.productInformation}>
               {name}
