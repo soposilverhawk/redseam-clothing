@@ -4,6 +4,7 @@ import useProducts from "../../custom-hooks/useProducts";
 import styles from "./Home.module.css";
 import ProductControls from "../../components/ProductControls/ProductControls";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
+import removeIcon from "../../assets/close-icon.png";
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -13,8 +14,8 @@ function Home() {
     priceTo: "",
   });
   const [appliedFilters, setAppliedFilters] = useState({
-    priceFrom: 100,
-    priceTo: 500,
+    priceFrom: null,
+    priceTo: null,
   });
   const [sortBy, setSortBy] = useState("");
 
@@ -50,6 +51,16 @@ function Home() {
     setPage(1); // reset to first page when sorting changes
   };
 
+  const removeFilters = () => {
+    setFiltersInput({
+      priceFrom: "",
+      priceTo: ""
+    })
+    setAppliedFilters({
+      priceFrom: null,
+      priceTo: null
+    })
+  }
 
   return (
     <section className={styles.productsSection}>
@@ -68,7 +79,6 @@ function Home() {
                 <div className={styles.inputWrapper}>
                   <input
                     type="text"
-                    required
                     name="priceFrom"
                     placeholder=""
                     value={filtersInput.priceFrom}
@@ -81,7 +91,6 @@ function Home() {
                 <div className={styles.inputWrapper}>
                   <input
                     type="text"
-                    required
                     placeholder=""
                     name="priceTo"
                     value={filtersInput.priceTo}
@@ -96,7 +105,17 @@ function Home() {
             </form>
           </div>
         )}
-        <h1>Products</h1>
+        <div className={styles.productsAdditionalInfoContainer}>
+          <h1>Products</h1>
+          {(appliedFilters.priceFrom !== null || appliedFilters.priceTo !== null) && (
+            <div>
+              Price {appliedFilters.priceFrom ?? ""} - {appliedFilters.priceTo ?? ""}
+              <button aria-label="Remove price filter" onClick={removeFilters}>
+                <img src={removeIcon} alt="" />
+              </button>
+            </div>
+          )}
+        </div>
         <div className={styles.userControlsContainer}>
           <p>
             Showing{" "}

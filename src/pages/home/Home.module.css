@@ -128,3 +128,25 @@
 .inputWrapper input:focus + .placeholder {
   display: none;
 }
+.productsAdditionalInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.9rem;
+}
+.productsAdditionalInfoContainer div {
+  font-size: 1.4rem;
+  border: 1px solid var(--secondary-gray);
+  padding: 0.8rem;
+  width: 14.1rem;
+  border-radius: 5rem;
+  text-align: center;
+  color: var(--secondary-dark-blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.productsAdditionalInfoContainer div button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
