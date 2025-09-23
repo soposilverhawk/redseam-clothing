@@ -20,8 +20,8 @@ function useProducts({
 
       try {
         const params = { page };
-        if (priceFrom !== null) params["filter[price_from]"] = priceFrom;
-        if (priceTo !== null) params["filter[price_to"] = priceTo;
+        if (priceFrom !== null && priceFrom !== "") params["filter[price_from]"] = priceFrom;
+        if (priceTo !== null && priceTo !== "") params["filter[price_to]"] = priceTo;
         if (sortBy) params.sort = sortBy;
 
         const response = await axios.get(
