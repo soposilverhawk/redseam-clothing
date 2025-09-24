@@ -5,6 +5,9 @@ import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import styles from "./ProductPage.module.css";
 
 function ProductPage() {
+  // fix default color and sizes to show
+  // handle loading and error logic
+  // handle form functionality
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
   const [selectedColor, setSelectedColor] = useState(product?.color);
