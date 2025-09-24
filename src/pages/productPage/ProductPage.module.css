@@ -56,6 +56,8 @@
   display: flex;
   flex-direction: column;
   gap: 4.8rem;
+  border-bottom: 1px solid var(--secondary-gray);
+  padding-bottom: 5.6rem;
 }
 .productDetails {
   display: flex;
@@ -107,4 +109,27 @@ input[type="radio"]:checked + .colorCircle {
   padding: 0.9rem 1.6rem;
   border: 1px solid var(--secondary-gray);
   border-radius: var(--btn-radius-md);
+}
+.productDescriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.brandLogoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 6.1rem;
+}
+.brandLogoContainer h2 {
+   font-size: var(--txt-reg-xl);
+   font-weight: 600;
+}
+.brandLogoContainer img {
+  height: 100%;
+}
+.productDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 1.9rem;
 }

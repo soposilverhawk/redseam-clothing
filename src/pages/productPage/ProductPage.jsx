@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useProducts from "../../custom-hooks/useProducts";
+import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import styles from "./ProductPage.module.css";
 
 function ProductPage() {
@@ -93,7 +94,18 @@ function ProductPage() {
                 ))}
               </select>
             </div>
+            <ActionBtn variant="cartAction" size="large">Add to Cart</ActionBtn>
           </form>
+          <div className={styles.productDescriptionContainer}>
+            <div className={styles.brandLogoContainer}>
+              <h2>Details</h2>
+              <img src={product?.brand?.image} alt={`${product?.brand?.name} logo`} />
+            </div>
+            <div className={styles.productDescription}>
+              <p>Brand: {product?.brand?.name}</p>
+              <p>{product?.description}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
