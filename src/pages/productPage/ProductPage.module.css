@@ -52,6 +52,11 @@
   flex-direction: column;
   gap: 5.6rem;
 }
+.productDetailsAndOptionsContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
+}
 .productDetails {
   display: flex;
   flex-direction: column;
@@ -68,7 +73,7 @@
   flex-direction: column;
   gap: 1.6rem;
 }
-.colorOptionsContainer {
+.customizationOptionsContainer {
   display: flex;
   gap: 1.3rem;
 }
@@ -88,4 +93,12 @@
 }
 input[type="radio"]:checked + .colorCircle {
   border: 2px solid var(--secondary-gray)
+}
+.sizeButton {
+  padding: 0.9rem 1.6rem;
+  border-radius: var(--btn-radius-md);
+  border: 1px solid var(--secondary-gray);
+  background: none;
+  font-size: var(--txt-reg-md);
+  cursor: pointer;
 }

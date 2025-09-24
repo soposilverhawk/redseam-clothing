@@ -7,6 +7,7 @@ function ProductPage() {
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
   const [selectedColor, setSelectedColor] = useState(product?.color);
+  const [selectedSize, setSelectedSize] = useState(product?.size)
 
   const handleColorChange = (e) => {
     setSelectedColor(e.target.value);
@@ -43,9 +44,9 @@ function ProductPage() {
             <div className={styles.formOptionsWrapper}>
               <p>Color: {selectedColor}</p>
               {/* available colors container */}
-              <div className={styles.colorOptionsContainer}>
+              <div className={styles.customizationOptionsContainer}>
                 {product?.available_colors.map((color, idx) => (
-                  <label key={idx} className={styles.colorLabel}>
+                  <label key={`available-color-${idx + 1}`} className={styles.colorLabel}>
                     <input
                       type="radio"
                       name="color"
@@ -62,6 +63,19 @@ function ProductPage() {
                     />
                   </label>
                 ))}
+              </div>
+            </div>
+            <div className={styles.formOptionsWrapper}>
+              <p>Size: {selectedSize}</p>
+              <div>
+                {/* available sizes container */}
+                <div className={styles.customizationOptionsContainer}>
+                  {product?.available_sizes.map((size, idx) => (
+                    <button key={`available-size-${idx + 1}`} aria-label="pick available size" className={styles.sizeButton} type="button">
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </form>
