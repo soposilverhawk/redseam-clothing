@@ -102,3 +102,9 @@ input[type="radio"]:checked + .colorCircle {
   font-size: var(--txt-reg-md);
   cursor: pointer;
 }
+.qtySelect {
+  width: 7rem;
+  padding: 0.9rem 1.6rem;
+  border: 1px solid var(--secondary-gray);
+  border-radius: var(--btn-radius-md);
+}

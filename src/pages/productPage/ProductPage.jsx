@@ -7,7 +7,8 @@ function ProductPage() {
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
   const [selectedColor, setSelectedColor] = useState(product?.color);
-  const [selectedSize, setSelectedSize] = useState(product?.size)
+  const [selectedSize, setSelectedSize] = useState(product?.size);
+  const selectableQuantities = Array.from({length: 10}, (_, i) => i + 1)
 
   const handleColorChange = (e) => {
     setSelectedColor(e.target.value);
@@ -46,7 +47,10 @@ function ProductPage() {
               {/* available colors container */}
               <div className={styles.customizationOptionsContainer}>
                 {product?.available_colors.map((color, idx) => (
-                  <label key={`available-color-${idx + 1}`} className={styles.colorLabel}>
+                  <label
+                    key={`available-color-${idx + 1}`}
+                    className={styles.colorLabel}
+                  >
                     <input
                       type="radio"
                       name="color"
@@ -67,16 +71,27 @@ function ProductPage() {
             </div>
             <div className={styles.formOptionsWrapper}>
               <p>Size: {selectedSize}</p>
-              <div>
-                {/* available sizes container */}
-                <div className={styles.customizationOptionsContainer}>
-                  {product?.available_sizes.map((size, idx) => (
-                    <button key={`available-size-${idx + 1}`} aria-label="pick available size" className={styles.sizeButton} type="button">
-                      {size}
-                    </button>
-                  ))}
-                </div>
+              {/* available sizes container */}
+              <div className={styles.customizationOptionsContainer}>
+                {product?.available_sizes.map((size, idx) => (
+                  <button
+                    key={`available-size-${idx + 1}`}
+                    aria-label={`pick size ${size}`}
+                    className={styles.sizeButton}
+                    type="button"
+                  >
+                    {size}
+                  </button>
+                ))}
               </div>
+            </div>
+            <div className={styles.formOptionsWrapper}>
+              <p>Quantity</p>
+              <select name="quantity" id="product-quantity" className={styles.qtySelect}>
+                {selectableQuantities.map((value) => (
+                  <option key={`quantitiy-option-${value}`} value={value}>{value}</option>
+                ))}
+              </select>
             </div>
           </form>
         </div>
