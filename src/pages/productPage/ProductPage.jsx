@@ -8,6 +8,7 @@ function ProductPage() {
   // fix default color and sizes to show
   // handle loading and error logic
   // handle form functionality
+  // ensure different variations of product are tied to the color selections
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
   const [selectedColor, setSelectedColor] = useState(product?.color);
