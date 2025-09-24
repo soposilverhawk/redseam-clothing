@@ -11,6 +11,7 @@ import ROUTES from "../../routes/Routes";
 function Home() {
   // handle edge case of user selecting only one filter instead of range
   // handle loading and error logics for data
+  // sort by first option should not be clickable/interactive, fix it
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
