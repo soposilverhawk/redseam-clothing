@@ -1,0 +1,38 @@
+import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext"; // to get token
+
+function useCart() {
+  const { token } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const addToCart = async ({ productId, color, size, quantity }) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post(
+        `https://api.redseam.redberryinternship.ge/api/cart/products/${productId}`,
+        { color, size, quantity },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`, // 🔑 needs token
+          },
+        }
+      );
+
+      return response.data;
+    } catch (err) {
+      setError(err.response?.data || err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { addToCart, loading, error };
+}
+
+export default useCart;
