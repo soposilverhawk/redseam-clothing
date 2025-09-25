@@ -7,24 +7,34 @@ import styles from "./ProductPage.module.css";
 function ProductPage() {
   // handle loading and error logic
   // handle form functionality
-  // ensure different variations of product are tied to the color selections
-  // tie selected size to UX
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [activeImage, setActiveImage] = useState("");
   const selectableQuantities = Array.from({ length: 10 }, (_, i) => i + 1);
 
   useEffect(() => {
     if (product) {
-      setSelectedColor(product.available_colors[0] || "");
+      const defaultColor = product.available_colors[0] || "";
+      setSelectedColor(defaultColor);
+      setActiveImage(product.images[0] || "");
       setSelectedSize(product.available_sizes[0] || "");
     }
   }, [product]);
-  const handleColorChange = (e) => {
-    setSelectedColor(e.target.value);
+
+  const handleColorChange = (color, idx) => {
+    setSelectedColor(color);
+    setActiveImage(product.images[idx])
   };
-  console.log(product);
+  const handleVariationChangeClick = (idx) => {
+    setActiveImage(product.images[idx]);
+    setSelectedColor(product.available_colors[idx])
+  }
+  const handleSizeChange = (size) => {
+    setSelectedSize(size);
+  };
+
   return (
     <section className={styles.section}>
       <div>
@@ -38,13 +48,14 @@ function ProductPage() {
                 key={`product-variant-${idx + 1}`}
                 className={styles.variationStylesSelect}
                 aria-label={`Select variant ${idx + 1}`}
+                onClick={() => handleVariationChangeClick(idx)}
               >
                 <img src={img} alt={product.description} />
               </button>
             ))}
           </div>
           <div className={styles.activeStyle}>
-            <img src={product?.cover_image} alt={product?.description} />
+            <img src={activeImage} alt={product?.description} />
           </div>
         </div>
         <div className={styles.productDetailsAndOptionsContainer}>
@@ -66,7 +77,7 @@ function ProductPage() {
                       type="radio"
                       name="color"
                       value={color}
-                      onChange={(e) => handleColorChange(e)}
+                      onChange={(e) => handleColorChange(color, idx)}
                       checked={selectedColor === color}
                       style={{ display: "none" }} // hide native radio
                     />
@@ -90,6 +101,7 @@ function ProductPage() {
                     aria-label={`pick size ${size}`}
                     className={styles.sizeButton}
                     type="button"
+                    onClick={() => handleSizeChange(size)}
                   >
                     {size}
                   </button>
