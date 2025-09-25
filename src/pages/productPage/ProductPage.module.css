@@ -107,6 +107,12 @@
   font-size: var(--txt-reg-md);
   cursor: pointer;
 }
+.sizeButton:hover {
+  border-color: #000;
+}
+.activeSizeButton {
+  border-color: #000;
+}
 .qtySelect {
   width: 7rem;
   padding: 0.9rem 1.6rem;

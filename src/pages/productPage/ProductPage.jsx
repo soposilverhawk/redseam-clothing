@@ -25,12 +25,12 @@ function ProductPage() {
 
   const handleColorChange = (color, idx) => {
     setSelectedColor(color);
-    setActiveImage(product.images[idx])
+    setActiveImage(product.images[idx]);
   };
   const handleVariationChangeClick = (idx) => {
     setActiveImage(product.images[idx]);
-    setSelectedColor(product.available_colors[idx])
-  }
+    setSelectedColor(product.available_colors[idx]);
+  };
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
@@ -99,7 +99,9 @@ function ProductPage() {
                   <button
                     key={`available-size-${idx + 1}`}
                     aria-label={`pick size ${size}`}
-                    className={styles.sizeButton}
+                    className={`${styles.sizeButton} ${
+                      selectedSize === size ? styles.activeSizeButton : ""
+                    }`}
                     type="button"
                     onClick={() => handleSizeChange(size)}
                   >
