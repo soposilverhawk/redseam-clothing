@@ -99,6 +99,7 @@ function Form({ variant }) {
       login(response.data.user, response.data.token);
       setLoginSubmittedData({ success: "Logged in successfully" });
       setLoginData({ email: "", password: "" });
+      navigate(ROUTES.HOME)
     } catch (error) {
       if (error.response) {
         setLoginSubmittedData({ error: error.response.data.message });
