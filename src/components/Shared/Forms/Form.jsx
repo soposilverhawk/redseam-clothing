@@ -7,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/Routes";
 import AvatarUpload from "../../avatarUpload/AvatarUpload";
 import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
 
 function Form({ variant }) {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -94,7 +96,7 @@ function Form({ variant }) {
       );
 
       // SUCCESS
-      localStorage.setItem("token", response.data.token);
+      login(response.data.user, response.data.token);
       setLoginSubmittedData({ success: "Logged in successfully" });
       setLoginData({ email: "", password: "" });
     } catch (error) {
