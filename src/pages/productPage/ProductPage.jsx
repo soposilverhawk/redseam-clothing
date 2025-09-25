@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useProducts from "../../custom-hooks/useProducts";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import styles from "./ProductPage.module.css";
 
 function ProductPage() {
-  // fix default color and sizes to show
   // handle loading and error logic
   // handle form functionality
   // ensure different variations of product are tied to the color selections
+  // tie selected size to UX
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
-  const [selectedColor, setSelectedColor] = useState(product?.color);
-  const [selectedSize, setSelectedSize] = useState(product?.size);
-  const selectableQuantities = Array.from({length: 10}, (_, i) => i + 1)
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const selectableQuantities = Array.from({ length: 10 }, (_, i) => i + 1);
 
+  useEffect(() => {
+    if (product) {
+      setSelectedColor(product.available_colors[0] || "");
+      setSelectedSize(product.available_sizes[0] || "");
+    }
+  }, [product]);
   const handleColorChange = (e) => {
     setSelectedColor(e.target.value);
   };
@@ -92,18 +98,29 @@ function ProductPage() {
             </div>
             <div className={styles.formOptionsWrapper}>
               <p>Quantity</p>
-              <select name="quantity" id="product-quantity" className={styles.qtySelect}>
+              <select
+                name="quantity"
+                id="product-quantity"
+                className={styles.qtySelect}
+              >
                 {selectableQuantities.map((value) => (
-                  <option key={`quantitiy-option-${value}`} value={value}>{value}</option>
+                  <option key={`quantitiy-option-${value}`} value={value}>
+                    {value}
+                  </option>
                 ))}
               </select>
             </div>
-            <ActionBtn variant="cartAction" size="large">Add to Cart</ActionBtn>
+            <ActionBtn variant="cartAction" size="large">
+              Add to Cart
+            </ActionBtn>
           </form>
           <div className={styles.productDescriptionContainer}>
             <div className={styles.brandLogoContainer}>
               <h2>Details</h2>
-              <img src={product?.brand?.image} alt={`${product?.brand?.name} logo`} />
+              <img
+                src={product?.brand?.image}
+                alt={`${product?.brand?.name} logo`}
+              />
             </div>
             <div className={styles.productDescription}>
               <p>Brand: {product?.brand?.name}</p>
