@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import closeIcon from "../../../assets/close-icon.png";
+import emptyCartIcon from "../../../assets/shopping-cart-orange.png";
+import ActionBtn from "../ActionBtn/ActionBtn";
 
-function CartInfo(variant="aside") {
+function CartInfo(variant = "aside", isEmpty) {
   return (
     <aside>
       {/* aside cart header */}
@@ -14,7 +16,14 @@ function CartInfo(variant="aside") {
         </button>
       </div>
       {/* aside cart content */}
-      
+      {isEmpty && (
+        <div>
+          <img src={emptyCartIcon} alt="empty cart icon" />
+          <h4>Ooops!</h4>
+          <p>You've got nothing in your cart just yet...</p>
+          <ActionBtn size="small">Start shopping</ActionBtn>
+        </div>
+      )}
     </aside>
   );
 }
