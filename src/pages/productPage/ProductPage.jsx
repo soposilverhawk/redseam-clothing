@@ -3,14 +3,20 @@ import { useParams } from "react-router-dom";
 import useProducts from "../../custom-hooks/useProducts";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import styles from "./ProductPage.module.css";
+import useCart from "../../custom-hooks/useCart";
+import { useAuth } from "../../context/AuthContext";
 
 function ProductPage() {
   // handle loading and error logic
   // handle form functionality
   const { id } = useParams();
   const { data: product, loading, error } = useProducts({ id });
+  const {addToCart, loading: cartLoading, error: cartError} = useCart();
+  const {token} = useAuth();
+
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectedQty, setSelectedQty] = useState(1);
   const [activeImage, setActiveImage] = useState("");
   const selectableQuantities = Array.from({ length: 10 }, (_, i) => i + 1);
 
@@ -34,6 +40,29 @@ function ProductPage() {
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
+  const handleQtyChange = (event) => {
+    setSelectedQty(Number(event.target.value))
+  }
+
+  const handleAddToCart = async (event) => {
+    event.preventDefault();
+
+    if (!token) {
+      alert("You need to log in to add products to your cart!");
+      return
+    }
+
+    try {
+      await addToCart({
+        productId: product.id,
+        color: selectedColor,
+        size: selectedSize,
+        quantity: selectedQty,
+      })
+    } catch (err) {
+      alert("Failed to add to cart. Please try again.")
+    }
+  }
 
   return (
     <section className={styles.section}>
@@ -63,7 +92,7 @@ function ProductPage() {
             <h1>{product?.name}</h1>
             <p>$ {product?.price}</p>
           </div>
-          <form>
+          <form onSubmit={(e) => handleAddToCart(e)}>
             <div className={styles.formOptionsWrapper}>
               <p>Color: {selectedColor}</p>
               {/* available colors container */}
@@ -116,6 +145,7 @@ function ProductPage() {
                 name="quantity"
                 id="product-quantity"
                 className={styles.qtySelect}
+                onChange={(e) => handleQtyChange(e)}
               >
                 {selectableQuantities.map((value) => (
                   <option key={`quantitiy-option-${value}`} value={value}>

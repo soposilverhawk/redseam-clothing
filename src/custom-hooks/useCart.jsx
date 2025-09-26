@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext"; // to get token
+import { useAuth } from "../context/AuthContext"; 
 
 function useCart() {
   const { token } = useAuth();
@@ -18,7 +18,7 @@ function useCart() {
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${token}`, // 🔑 needs token
+            Authorization: `Bearer ${token}`,
           },
         }
       );
