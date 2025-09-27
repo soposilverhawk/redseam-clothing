@@ -29,6 +29,10 @@ function CartInfo({ isOpen, setIsCartOpen }) {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
+
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
       {/* Header */}
@@ -45,59 +49,86 @@ function CartInfo({ isOpen, setIsCartOpen }) {
       {loading && <p>Loading your cart...</p>}
       {error && <p className="error">{error}</p>}
 
-      {!loading && cartItems.length === 0 && (
-        <div className={styles.emptyCartMsgContainer}>
-          <img src={emptyCartIcon} alt="empty cart icon" />
-          <h4>Ooops!</h4>
-          <p>You've got nothing in your cart just yet...</p>
-          <ActionBtn size="small" handleClick={redirectToProducts}>
-            Start shopping
-          </ActionBtn>
-        </div>
-      )}
+      {isOpen && (
+        <div className={styles.sidebarContentWrapper}>
+          {!loading && cartItems.length === 0 && (
+            <div className={styles.emptyCartMsgContainer}>
+              <img src={emptyCartIcon} alt="empty cart icon" />
+              <h4>Ooops!</h4>
+              <p>You've got nothing in your cart just yet...</p>
+              <ActionBtn size="small" handleClick={redirectToProducts}>
+                Start shopping
+              </ActionBtn>
+            </div>
+          )}
 
-      {!loading && cartItems.length > 0 && (
-        <ul className={styles.cartList}>
-          {cartItems.map((item, idx) => {
-            // Find the index of the selected color
-            const colorIndex = item.available_colors.indexOf(item.color);
+          {!loading && cartItems.length > 0 && (
+            <>
+              <ul className={styles.cartList}>
+                {cartItems.map((item, idx) => {
+                  // Find the index of the selected color
+                  const colorIndex = item.available_colors.indexOf(item.color);
 
-            // Get the corresponding image
-            const imageForColor =
-              colorIndex >= 0 ? item.images[colorIndex] : item.cover_image;
+                  // Get the corresponding image
+                  const imageForColor =
+                    colorIndex >= 0
+                      ? item.images[colorIndex]
+                      : item.cover_image;
 
-            return (
-              <li key={`cart-item-${idx + 1}`}>
-                <img
-                  src={imageForColor}
-                  alt={`${item.name} in ${item.color}`}
-                />
-                <div className={styles.itemInfoWrapper}>
-                  {/* item info */}
-                  <div className={styles.itemInfoContainer}>
-                    <div>
-                      <p className={styles.itemName}>{item.name}</p>
-                      <p>{item.color}</p>
-                      <p>{item.size}</p>
-                    </div>
-                    <p className={styles.itemTotalPrice}>$ {item.total_price}</p>
-                  </div>
-                  {/* item controls */}
-                  <div className={styles.itemControlsContainer}>
-                    {/* quantity buttons */}
-                    <div className={styles.qtyButtonsContainer}>
-                      <button>-</button>
-                      <span>{item.quantity}</span>
-                      <button>+</button>
-                    </div>
-                    {/* item removal button */}
-                    <button className={styles.removeButton}>Remove</button>
-                  </div>
+                  return (
+                    <li key={`cart-item-${idx + 1}`}>
+                      <img
+                        src={imageForColor}
+                        alt={`${item.name} in ${item.color}`}
+                      />
+                      <div className={styles.itemInfoWrapper}>
+                        {/* item info */}
+                        <div className={styles.itemInfoContainer}>
+                          <div>
+                            <p className={styles.itemName}>{item.name}</p>
+                            <p>{item.color}</p>
+                            <p>{item.size}</p>
+                          </div>
+                          <p className={styles.itemTotalPrice}>
+                            $ {item.total_price}
+                          </p>
+                        </div>
+                        {/* item controls */}
+                        <div className={styles.itemControlsContainer}>
+                          {/* quantity buttons */}
+                          <div className={styles.qtyButtonsContainer}>
+                            <button>-</button>
+                            <span>{item.quantity}</span>
+                            <button>+</button>
+                          </div>
+                          {/* item removal button */}
+                          <button className={styles.removeButton}>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className={styles.cartSummaryContainer}>
+                <div className={styles.summaryInformationContainer}>
+                  <p>Items subtotal</p>
+                  <span>$ {}</span>
                 </div>
-              </li>
-            );
-          })}
-        </ul>
+                <div className={styles.summaryInformationContainer}>
+                  <p>Delivery</p>
+                  <span>$ 5</span>
+                </div>
+                <div className={styles.summaryInformationContainer}>
+                  <p>Total</p>
+                  <span>$ {}</span>
+                </div>
+                <ActionBtn size="large">Go to checkout</ActionBtn>
+              </div>
+            </>
+          )}
+        </div>
       )}
     </aside>
   );
