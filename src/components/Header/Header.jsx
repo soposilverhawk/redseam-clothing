@@ -8,7 +8,7 @@ import ROUTES from "../../routes/Routes";
 import { useAuth } from "../../context/AuthContext";
 import userIcon from "../../assets/user.png";
 
-function Header() {
+function Header({ openCart }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, token } = useAuth();
@@ -28,7 +28,7 @@ function Header() {
       <div className={styles.userPanelContainer}>
         {location.pathname !== ROUTES.LOGIN &&
           location.pathname !== ROUTES.REGISTER && (
-            <button>
+            <button onClick={openCart}>
               <img src={cartImg} alt="Shopping cart" />
             </button>
           )}
