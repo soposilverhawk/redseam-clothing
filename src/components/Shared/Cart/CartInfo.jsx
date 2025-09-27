@@ -12,7 +12,6 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   const { getCartItems, loading, error } = useCart();
   const [cartItems, setCartItems] = useState([]);
   const deliveryFee = 5;
-  // fix issue with content being clumped down when a lot of items are added
 
   const closeCart = () => {
     setIsCartOpen(false);
