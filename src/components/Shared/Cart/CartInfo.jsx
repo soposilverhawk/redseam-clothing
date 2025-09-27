@@ -11,6 +11,8 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   const navigate = useNavigate();
   const { getCartItems, loading, error } = useCart();
   const [cartItems, setCartItems] = useState([]);
+  const deliveryFee = 5;
+  // fix issue with content being clumped down when a lot of items are added
 
   const closeCart = () => {
     setIsCartOpen(false);
@@ -32,6 +34,10 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems]);
+
+  const calculateCartItemsTotalPrice = () => {
+    return cartItems.reduce((acc, curr) => acc + curr.total_price, 0)
+  }
 
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
@@ -114,15 +120,15 @@ function CartInfo({ isOpen, setIsCartOpen }) {
               <div className={styles.cartSummaryContainer}>
                 <div className={styles.summaryInformationContainer}>
                   <p>Items subtotal</p>
-                  <span>$ {}</span>
+                  <span>$ {calculateCartItemsTotalPrice() - deliveryFee}</span>
                 </div>
                 <div className={styles.summaryInformationContainer}>
                   <p>Delivery</p>
-                  <span>$ 5</span>
+                  <span>$ {deliveryFee}</span>
                 </div>
                 <div className={styles.summaryInformationContainer}>
                   <p>Total</p>
-                  <span>$ {}</span>
+                  <span>$ {calculateCartItemsTotalPrice()}</span>
                 </div>
                 <ActionBtn size="large">Go to checkout</ActionBtn>
               </div>
