@@ -7,6 +7,28 @@ function useCart() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const getCartItems = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(
+        "https://api.redseam.redberryinternship.ge/api/cart"
+      , {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return response.data
+    } catch (err) {
+      setError(err.response?.data || err.message);
+      throw err;
+    } finally {
+      setLoading(false)
+    }
+  };
+
   const addToCart = async ({ productId, color, size, quantity }) => {
     setLoading(true);
     setError(null);
@@ -58,7 +80,7 @@ function useCart() {
     }
   };
 
-  return { addToCart, loading, error };
+  return { getCartItems, addToCart, updateCart, loading, error };
 }
 
 export default useCart;
