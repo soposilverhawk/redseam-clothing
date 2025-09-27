@@ -1,13 +1,44 @@
 .sidebar {
-    max-width: 54rem;
-    width: 0%;
-    height: 100vh;
-    background-color: var(--secondary-gray);
-    position: fixed;
-    top: 0;
-    right: 0;
-    transition: width 0.2s ease-in;
+  max-width: 54rem;
+  width: 0%;
+  height: 100vh;
+  background-color: var(--secondary-gray);
+  position: fixed;
+  top: 0;
+  right: 0;
+  transition: width 0.2s ease-in;
+  display: flex;
+  flex-direction: column;
 }
 .sidebar.open {
-    width: 100%;
+  width: 100%;
+  padding: 4rem;
+}
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--txt-reg-xl);
+}
+.sidebarHeader button {
+  width: 1.8rem;
+  height: 1.8rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.emptyCartMsgContainer {
+  margin: 15.1rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  text-align: center;
+  color: var(--secondary-dark-blue);
+}
+.emptyCartMsgContainer button {
+  margin-top: 2.4rem;
+}
+.emptyCartMsgContainer h4 {
+  font-size: 2.4rem;
+  color: var(--primary-dark-blue);
+  font-weight: 600;
 }

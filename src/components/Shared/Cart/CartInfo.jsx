@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import closeIcon from "../../../assets/close-icon.png";
+import closeIcon from "../../../assets/cart-close-icon.png";
 import emptyCartIcon from "../../../assets/shopping-cart-orange.png";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import styles from "./CartInfo.module.css";
@@ -11,7 +11,7 @@ function CartInfo({variant = "aside", isEmpty, isOpen, setIsCartOpen}) {
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
       {/* aside cart header */}
-      <div>
+      <div className={styles.sidebarHeader}>
         <h3>
           Shopping cart (<span>0</span>)
         </h3>
@@ -21,7 +21,7 @@ function CartInfo({variant = "aside", isEmpty, isOpen, setIsCartOpen}) {
       </div>
       {/* aside cart content */}
       {isEmpty && (
-        <div>
+        <div className={styles.emptyCartMsgContainer}>
           <img src={emptyCartIcon} alt="empty cart icon" />
           <h4>Ooops!</h4>
           <p>You've got nothing in your cart just yet...</p>

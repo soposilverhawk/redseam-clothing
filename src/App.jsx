@@ -5,7 +5,7 @@ import AppRoutes from "./routes/AppRoutes";
 import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import { useLocation } from "react-router-dom";
 import ROUTES from "./routes/Routes";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CartInfo from "./components/Shared/Cart/CartInfo";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <AppRoutes />
       </main>
       {isCartOpen && <div className="overlay"></div>}
-      <CartInfo isOpen={isCartOpen} setIsCartOpen={setIsCartOpen}/>
+      <CartInfo isOpen={isCartOpen} setIsCartOpen={setIsCartOpen} isEmpty={true}/>
     </ContentWrapper>
   ) : (
     <>
