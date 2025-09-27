@@ -9,7 +9,7 @@ import useCart from "../../../custom-hooks/useCart";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
   const navigate = useNavigate();
-  const { getCartItems, loading, error } = useCart();
+  const { getCartItems, deleteFromCart, loading, error } = useCart();
   const [cartItems, setCartItems] = useState([]);
   const deliveryFee = 5;
 
@@ -35,12 +35,20 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   }, [cartItems]);
 
   const calculateCartItemsTotalPrice = () => {
-    return cartItems.reduce((acc, curr) => acc + curr.total_price, 0)
-  }
+    return cartItems.reduce((acc, curr) => acc + curr.total_price, 0);
+  };
 
   const calculateToTalItems = () => {
-    return cartItems.reduce((acc, curr) => acc + curr.quantity, 0)
-  }
+    return cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
+  };
+
+  const removeItem = (id) => {
+    deleteFromCart({ productId: id })
+      .then(() => {
+        setCartItems((prev) => prev.filter((item) => item.id !== id));
+      })
+      .catch((err) => console.error("Failed to remove item:", err));
+  };
 
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
@@ -111,7 +119,10 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                             <button>+</button>
                           </div>
                           {/* item removal button */}
-                          <button className={styles.removeButton}>
+                          <button
+                            className={styles.removeButton}
+                            onClick={() => removeItem(item.id)}
+                          >
                             Remove
                           </button>
                         </div>
