@@ -38,12 +38,16 @@ function CartInfo({ isOpen, setIsCartOpen }) {
     return cartItems.reduce((acc, curr) => acc + curr.total_price, 0)
   }
 
+  const calculateToTalItems = () => {
+    return cartItems.reduce((acc, curr) => acc + curr.quantity, 0)
+  }
+
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
       {/* Header */}
       <div className={styles.sidebarHeader}>
         <h3>
-          Shopping cart (<span>{cartItems.length}</span>)
+          Shopping cart (<span>{calculateToTalItems()}</span>)
         </h3>
         <button aria-label="Close cart" onClick={closeCart}>
           <img src={closeIcon} alt="close" />
