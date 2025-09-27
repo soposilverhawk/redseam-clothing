@@ -134,7 +134,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
               <div className={styles.cartSummaryContainer}>
                 <div className={styles.summaryInformationContainer}>
                   <p>Items subtotal</p>
-                  <span>$ {calculateCartItemsTotalPrice() - deliveryFee}</span>
+                  <span>$ {calculateCartItemsTotalPrice()}</span>
                 </div>
                 <div className={styles.summaryInformationContainer}>
                   <p>Delivery</p>
@@ -142,7 +142,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                 </div>
                 <div className={styles.summaryInformationContainer}>
                   <p>Total</p>
-                  <span>$ {calculateCartItemsTotalPrice()}</span>
+                  <span>$ {calculateCartItemsTotalPrice() + deliveryFee}</span>
                 </div>
                 <ActionBtn size="large">Go to checkout</ActionBtn>
               </div>
