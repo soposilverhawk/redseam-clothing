@@ -8,8 +8,11 @@ import { useNavigate } from "react-router-dom";
 import useCart from "../../../custom-hooks/useCart";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
+  // handle case when quantity reaches 0 - the item should get removed from the cart
+  // fix the issue with price sumarries becoming "NaN" when new quantity is added
   const navigate = useNavigate();
-  const { getCartItems, deleteFromCart, loading, error } = useCart();
+  const { getCartItems, deleteFromCart, updateCart, loading, error } =
+    useCart();
   const [cartItems, setCartItems] = useState([]);
   const deliveryFee = 5;
 
@@ -48,6 +51,22 @@ function CartInfo({ isOpen, setIsCartOpen }) {
         setCartItems((prev) => prev.filter((item) => item.id !== id));
       })
       .catch((err) => console.error("Failed to remove item:", err));
+  };
+
+  const updateItemQty = (id, qty) => {
+    updateCart({ productId: id, quantity: qty })
+      .then((updatedItem) => {
+        setCartItems((prev) =>
+          prev.map((item) =>
+            item.id === id
+              ? { ...item, quantity: qty, total_price: updatedItem.total_price }
+              : item
+          )
+        );
+      })
+      .catch((err) => {
+        console.error("Failed to update item quantity:", err);
+      });
   };
 
   return (
@@ -114,9 +133,21 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                         <div className={styles.itemControlsContainer}>
                           {/* quantity buttons */}
                           <div className={styles.qtyButtonsContainer}>
-                            <button>-</button>
+                            <button
+                              onClick={() =>
+                                updateItemQty(item.id, item.quantity - 1)
+                              }
+                            >
+                              -
+                            </button>
                             <span>{item.quantity}</span>
-                            <button>+</button>
+                            <button
+                              onClick={() =>
+                                updateItemQty(item.id, item.quantity + 1)
+                              }
+                            >
+                              +
+                            </button>
                           </div>
                           {/* item removal button */}
                           <button
