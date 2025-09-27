@@ -2,7 +2,7 @@
   max-width: 54rem;
   width: 100%;
   height: 100vh;
-  background-color: var(--secondary-gray);
+  background-color: var(--primary-gray);
   position: fixed;
   top: 0;
   right: 0;
@@ -42,4 +42,94 @@
   font-size: 2.4rem;
   color: var(--primary-dark-blue);
   font-weight: 600;
+}
+.itemInfoWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cartList {
+  display: flex;
+  flex-direction: column;
+  gap: 3.6rem;
+  margin-top: 6.3rem;
+}
+.cartList li {
+  display: flex;
+  align-items: center;
+  gap: 1.7rem;
+  width: 100%;
+  height: 13.4rem;
+}
+.itemName,
+.itemTotalPrice {
+  color: var(--primary-dark-blue);
+  font-weight: 600;
+}
+.itemName {
+  font-size: 1.4rem;
+}
+.itemTotalPrice {
+  font-size: 1.8rem;
+}
+.cartList li img {
+  width: 10rem;
+  height: 100%;
+  border: 1px solid var(--secondary-gray);
+  border-radius: var(--btn-radius-md);
+}
+.itemInfoContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: 60%;
+}
+.itemInfoContainer div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  color: var(--secondary-dark-blue);
+}
+
+.itemControlsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qtyButtonsContainer {
+  border: 1px solid var(--secondary-gray);
+  border-radius: var(--btn-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  gap: 0.2rem;
+  font-size: 1.2rem;
+}
+.removeButton,
+.qtyButtonsContainer button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.qtyButtonsContainer button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: 2rem;
+  width: 2rem;
+  line-height: 1;
+}
+.qtyButtonsContainer span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.removeButton {
+  color: var(--secondary-dark-blue);
 }
