@@ -13,19 +13,20 @@ function useCart() {
 
     try {
       const response = await axios.get(
-        "https://api.redseam.redberryinternship.ge/api/cart"
-      , {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`
+        "https://api.redseam.redberryinternship.ge/api/cart",
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
-      return response.data
+      );
+      return response.data;
     } catch (err) {
       setError(err.response?.data || err.message);
       throw err;
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -80,7 +81,30 @@ function useCart() {
     }
   };
 
-  return { getCartItems, addToCart, updateCart, loading, error };
+  const deleteFromCart = async ({ productId }) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.delete(
+        `https://api.redseam.redberryinternship.ge/api/cart/products/${productId}`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      setError(err.response?.data || err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { getCartItems, addToCart, updateCart, deleteFromCart, loading, error };
 }
 
 export default useCart;
