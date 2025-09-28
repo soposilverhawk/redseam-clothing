@@ -5,10 +5,14 @@ import useCart from "../../custom-hooks/useCart";
 import CartItemList from "../../components/Shared/Cart/CartItemList";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import PurchaseConfirmationModal from "../../components/purchaseConfirmationModal/PurchaseConfirmationModal";
+import EmptyCart from "../../components/Shared/Cart/EmptyCart";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../routes/Routes";
 
 function Checkout() {
   const { user, token } = useAuth();
+  const navigate = useNavigate();
   const { getCartItems, deleteFromCart, updateCart, loading, error } =
     useCart();
   const [cartItems, setCartItems] = useState([]);
@@ -97,7 +101,7 @@ function Checkout() {
         }
       );
 
-      setCartItems([])
+      setCartItems([]);
 
       setOrderDetails({
         name: "",
@@ -106,7 +110,7 @@ function Checkout() {
         address: "",
         zip_code: "",
       });
-      
+
       if (response.status === 200) {
         setIsOrderDetailsSubmitted(true);
         setIsSuccessModalOpen(true);
@@ -125,8 +129,10 @@ function Checkout() {
     <section className={styles.section}>
       {isOrderDetailsSubmitted && isSuccessModalOpen && (
         <>
-        <div className="overlay"></div>
-        <PurchaseConfirmationModal setIsSuccessModalOpen={setIsSuccessModalOpen}/>
+          <div className="overlay"></div>
+          <PurchaseConfirmationModal
+            setIsSuccessModalOpen={setIsSuccessModalOpen}
+          />
         </>
       )}
       <h1>Checkout</h1>
@@ -184,22 +190,34 @@ function Checkout() {
           </form>
         </div>
         <div className={styles.cartInfoContainer}>
-          <div className={styles.cartListWrapper}>
-            <CartItemList
-              cartItems={cartItems}
+          {isOrderDetailsSubmitted ? (
+            <EmptyCart
               loading={loading}
-              deliveryFee={deliveryFee}
-              updateItemQty={updateItemQty}
-              removeItem={removeItem}
+              cartItems={cartItems}
+              clickEvent={() => navigate(ROUTES.HOME)}
+              token={token}
+              variant="checkout"
             />
-          </div>
-          <ActionBtn
-            size="large"
-            width="100%"
-            handleClick={(e) => submitOrderDetails(e)}
-          >
-            Pay
-          </ActionBtn>
+          ) : (
+            <>
+              <div className={styles.cartListWrapper}>
+                <CartItemList
+                  cartItems={cartItems}
+                  loading={loading}
+                  deliveryFee={deliveryFee}
+                  updateItemQty={updateItemQty}
+                  removeItem={removeItem}
+                />
+              </div>
+              <ActionBtn
+                size="large"
+                width="100%"
+                handleClick={(e) => submitOrderDetails(e)}
+              >
+                Pay
+              </ActionBtn>
+            </>
+          )}
         </div>
       </div>
     </section>

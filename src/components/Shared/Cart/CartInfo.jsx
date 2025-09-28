@@ -99,8 +99,9 @@ function CartInfo({ isOpen, setIsCartOpen }) {
           <EmptyCart
             loading={loading}
             cartItems={cartItems}
-            redirectToProducts={redirectToProducts}
+            clickEvent={redirectToProducts}
             token={token}
+            variant="sidebar"
           />
 
           {!loading && cartItems.length > 0 && (
