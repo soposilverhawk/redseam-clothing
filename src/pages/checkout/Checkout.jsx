@@ -35,9 +35,6 @@ function Checkout() {
     }));
   };
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
 
   useEffect(() => {
     if (!token) return;

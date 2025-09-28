@@ -132,9 +132,8 @@ function Form({ variant }) {
       }
     }
   };
-  useEffect(() => {
-    if (registrationErrors) console.log(registrationErrors);
-  }, [registrationErrors]);
+
+  
   const renderForm = () => {
     switch (variant) {
       case "login":

@@ -12,7 +12,6 @@ function Header({ openCart }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, token } = useAuth();
-  console.log(user);
   return (
     <header className={styles.header}>
       <button

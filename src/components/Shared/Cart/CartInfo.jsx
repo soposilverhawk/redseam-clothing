@@ -35,10 +35,6 @@ function CartInfo({ isOpen, setIsCartOpen }) {
     }
   }, [isOpen, token]);
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
-
   const calculateToTalItems = () => {
     return cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
   };
