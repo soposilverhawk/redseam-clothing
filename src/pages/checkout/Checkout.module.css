@@ -11,7 +11,7 @@
 }
 .contentWrapper {
   display: flex;
-  gap: 13.1rem;
+  justify-content: space-between;
 }
 .formWrapper {
   max-width: 112.9rem;
@@ -49,5 +49,9 @@
   padding-left: 1.2rem;
 }
 .inputGroup input[type="email"] {
+  width: 100%;
+}
+.cartInfoContainer {
+  max-width: 46rem;
   width: 100%;
 }
