@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import useCart from "../../../custom-hooks/useCart";
 import { useAuth } from "../../../context/AuthContext";
 import CartItemList from "./CartItemList";
+import EmptyCart from "./EmptyCart";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
   const { token } = useAuth();
@@ -95,16 +96,12 @@ function CartInfo({ isOpen, setIsCartOpen }) {
       {/* Content */}
       {isOpen && (
         <div className={styles.sidebarContentWrapper}>
-          {((!loading && cartItems.length === 0) || !token) && (
-            <div className={styles.emptyCartMsgContainer}>
-              <img src={emptyCartIcon} alt="empty cart icon" />
-              <h4>Ooops!</h4>
-              <p>You've got nothing in your cart just yet...</p>
-              <ActionBtn size="small" handleClick={redirectToProducts}>
-                Start shopping
-              </ActionBtn>
-            </div>
-          )}
+          <EmptyCart
+            loading={loading}
+            cartItems={cartItems}
+            redirectToProducts={redirectToProducts}
+            token={token}
+          />
 
           {!loading && cartItems.length > 0 && (
             <CartItemList
