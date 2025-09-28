@@ -1,12 +1,63 @@
-# React + Vite
+# Project Name - Designo Website
+This is a solution to the [Redberry Bootcamp ecommerce website - RedSeam Clothing]
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# The challenge
+Users should be able to:
+- View clothing products populated by a backend API
+- See hover states for all interactive elements throughout the site
+- Filter items based on price range
+- View product items in descending, ascending and date of creation orders
+- Register on the website
+- Login using email and password
+- View individual product items on click of their respective cards
+- Add, update and remove the items from the cart
+- View cart preview when logged in
+- Place purchase after filling out order details form
+- Receive backend API error messages when any of the form data is not submitted correctly, e.g:
+  - The `Name`, `Email Address` or `Your Message` fields are empty should show "The field is required"
+  - The `Email Address` is not formatted correctly should show "The email field must be a valid email address"
 
-Currently, two official plugins are available:
+# Links
+- Solution URL: https://github.com/soposilverhawk/redseam-clothing
+- Live Site URL: [https://soposilverhawk.github.io/redseam-clothing/](https://soposilverhawk.github.io/redseam-clothing/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Built with
+- HTML
+- Modular CSS
+- React
+- React Router
+- Vite - Build tool
+- Context API (for global state management, e.g authenticatin)
+- Custom hooks (for reusable logic, e.g cart management)
+- Component-based architecture (modular, reusable UI components)
+- Backend API (fetching products, submitting orders, handling login and registration)
 
-## Expanding the ESLint configuration
+# Building the Project
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+# What We learned and Practiced 
+Working on the Redberry e-commerce webiste allowed me to gain hands-on experience with real-world web development practices. Throughout the project, I strengthened my technical skills and better saw the key areas where I can further imrpove my knowledge and understanding.
+
+## Learned:
+- How to work with real backend API data
+- How to practically implement context API to manage global state
+- How to make smart pagination
+- How to utilize custom hooks
+
+## areas to improve:
+- Handling errors when working with backend data
+- Optimization of context usage (introducing more practical usage of context where necessary)
+- Handling loading states
+- Refactoring practices
+
+
+# Authors
+ - Sopo Bichinashvili
+
+# Project Mentor
+- Redberry
+  
+
+# Acknowledgments
+Big thanks to project mentors for providing detailed guidelines and answers for other project-related queries, alongisde well structured figma design and backend API.
+
