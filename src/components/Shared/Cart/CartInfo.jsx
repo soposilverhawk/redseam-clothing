@@ -10,7 +10,6 @@ import { useAuth } from "../../../context/AuthContext";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
   // handle case when quantity reaches 0 - the item should get removed from the cart
-  // fix the issue with price sumarries becoming "NaN" when new quantity is added
   const { token } = useAuth();
   const navigate = useNavigate();
   const { getCartItems, deleteFromCart, updateCart, loading, error } =
@@ -40,7 +39,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   }, [cartItems]);
 
   const calculateCartItemsTotalPrice = () => {
-    return cartItems.reduce((acc, curr) => acc + curr.total_price, 0);
+    return cartItems.reduce((acc, curr) => acc + Number(curr.price) * Number(curr.quantity), 0);
   };
 
   const calculateToTalItems = () => {
@@ -55,14 +54,12 @@ function CartInfo({ isOpen, setIsCartOpen }) {
       .catch((err) => console.error("Failed to remove item:", err));
   };
 
-  const updateItemQty = (id, qty) => {
+ const updateItemQty = (id, qty) => {
     updateCart({ productId: id, quantity: qty })
-      .then((updatedItem) => {
+      .then(() => {
         setCartItems((prev) =>
           prev.map((item) =>
-            item.id === id
-              ? { ...item, quantity: qty, total_price: updatedItem.total_price }
-              : item
+            item.id === id ? { ...item, quantity: qty } : item
           )
         );
       })
@@ -128,7 +125,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                             <p>{item.size}</p>
                           </div>
                           <p className={styles.itemTotalPrice}>
-                            $ {item.total_price}
+                            $ {Number(item.price) * Number(item.quantity)}
                           </p>
                         </div>
                         {/* item controls */}
