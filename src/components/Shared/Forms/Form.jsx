@@ -17,6 +17,7 @@ function Form({ variant }) {
     password: "",
   });
   const [loginSubmittedData, setLoginSubmittedData] = useState(null);
+  const [registrationErrors, setRegistrationErrors] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
   const [showPassword, setShowPassword] = useState({
     password: false,
@@ -49,6 +50,16 @@ function Form({ variant }) {
       ...prev,
       [name]: value,
     }));
+
+    setRegistrationErrors((prev) => {
+      if (!prev?.error?.[name]) return prev;
+      return {
+        error: {
+          ...prev.error,
+          [name]: undefined
+        }
+      }
+    })
   };
   const validateInputs = () => {
     const errors = {};
@@ -155,12 +166,18 @@ function Form({ variant }) {
       navigate(ROUTES.HOME)
     } catch (error) {
       if (error.response) {
-        console.error("Registration failed:", error.response.data);
+        if (error.response) {
+          const apiErrors = error.response.data.errors;
+          setRegistrationErrors({error: apiErrors})
+        }
       } else {
         console.error("Error submitting registration:", error.message);
       }
     }
   };
+  useEffect(() => {
+    console.log(registrationErrors)
+  }, [registrationErrors])
   const renderForm = () => {
     switch (variant) {
       case "login":
@@ -240,6 +257,7 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Username <span className={styles.required}>*</span>
                 </span>
+                {registrationErrors?.error?.username && <p className={styles.registrationErrorMsg}>{registrationErrors?.error?.username[0]}</p>}
               </div>
               <div className={styles.inputWrapper}>
                 <input
@@ -253,6 +271,7 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Email <span className={styles.required}>*</span>
                 </span>
+                {registrationErrors?.error?.email && <p className={styles.registrationErrorMsg}>{registrationErrors?.error?.email[0]}</p>}
               </div>
               <div className={styles.inputWrapper}>
                 <input
@@ -284,6 +303,7 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Confirm Password <span className={styles.required}>*</span>
                 </span>
+                 {registrationErrors?.error?.password && <p className={styles.registrationErrorMsg}>{registrationErrors?.error?.password[0]}</p>}
                 <FontAwesomeIcon
                   icon={faEye}
                   className={styles.passwordVisibilityToggle}
@@ -309,12 +329,12 @@ function Form({ variant }) {
     <div className={styles.formWrapper}>
       <h1>{variant === "login" ? "Log in" : "Registration"}</h1>
       {renderForm()}
-      {loginSubmittedData?.error && (
+      {/* {loginSubmittedData?.error && (
         <p className={styles.errorMsg}>{loginSubmittedData.error}</p>
       )}
       {loginSubmittedData?.success && (
         <p className={styles.successMsg}>{loginSubmittedData.success}</p>
-      )}
+      )} */}
     </div>
   );
 }
