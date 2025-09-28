@@ -32,10 +32,8 @@ Users should be able to:
 - Component-based architecture (modular, reusable UI components)
 - Backend API (fetching products, submitting orders, handling login and registration)
 
-# Building the Project
 
-
-# What We learned and Practiced 
+# What I learned and Practiced 
 Working on the Redberry e-commerce webiste allowed me to gain hands-on experience with real-world web development practices. Throughout the project, I strengthened my technical skills and better saw the key areas where I can further imrpove my knowledge and understanding.
 
 ## Learned:
@@ -46,7 +44,7 @@ Working on the Redberry e-commerce webiste allowed me to gain hands-on experienc
 
 ## areas to improve:
 - Handling errors when working with backend data
-- Optimization of context usage (introducing more practical usage of context where necessary)
+- Optimization of context usage (introdWhucing more practical usage of context where necessary)
 - Handling loading states
 - Refactoring practices
 - Possibility to expand on using cookies
