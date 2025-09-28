@@ -10,6 +10,7 @@ import ROUTES from "../../routes/Routes";
 function ProductPage() {
   // handle loading and error logic
   // handle form functionality
+  // make the cart sidebar open right away when the product is added to the cart
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: product, loading, error } = useProducts({ id });
