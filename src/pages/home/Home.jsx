@@ -11,7 +11,6 @@ import ROUTES from "../../routes/Routes";
 function Home() {
   // handle edge case of user selecting only one filter instead of range
   // handle loading and error logics for data
-  // sort by first option should not be clickable/interactive, fix it
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
@@ -135,7 +134,7 @@ function Home() {
             Filter
           </button>
           <select name="sorting" id="sorting" onChange={handleSortChange}>
-            <option value="">Sort by</option>
+            <option value="" disabled selected>Sort by</option>
             <option value="created_at">New products first</option>
             <option value="price">Price, low to high</option>
             <option value="-price">Price, high to low</option>
