@@ -3,6 +3,7 @@ import styles from "./Checkout.module.css";
 import { useAuth } from "../../context/AuthContext";
 import useCart from "../../custom-hooks/useCart";
 import CartItemList from "../../components/Shared/Cart/CartItemList";
+import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 
 function Checkout() {
   const { user, token } = useAuth();
@@ -126,13 +127,16 @@ function Checkout() {
           </form>
         </div>
         <div className={styles.cartInfoContainer}>
-          <CartItemList
+          <div className={styles.cartListWrapper}>
+            <CartItemList
             cartItems={cartItems}
             loading={loading}
             deliveryFee={deliveryFee}
             updateItemQty={updateItemQty}
             removeItem={removeItem}
           />
+          </div>
+          <ActionBtn size="large" width="100%">Pay</ActionBtn>
         </div>
       </div>
     </section>
