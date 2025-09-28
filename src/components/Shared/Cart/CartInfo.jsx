@@ -81,6 +81,11 @@ function CartInfo({ isOpen, setIsCartOpen }) {
       });
   };
 
+  const goToCheckout = () => {
+    setIsCartOpen(false);
+    navigate(ROUTES.CHECKOUT);
+  }
+
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
       {/* Header */}
@@ -187,7 +192,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                   <p>Total</p>
                   <span>$ {calculateCartItemsTotalPrice() + deliveryFee}</span>
                 </div>
-                <ActionBtn size="large">Go to checkout</ActionBtn>
+                <ActionBtn size="large" handleClick={goToCheckout}>Go to checkout</ActionBtn>
               </div>
             </>
           )}
