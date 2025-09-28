@@ -24,6 +24,7 @@ function Checkout() {
     address: "",
     zip_code: "",
   });
+  const [detailsSubmissionErrors, setDetailsSubmissionErorrs] = useState(null);
   const [isOrderDetailsSubmitted, setIsOrderDetailsSubmitted] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
@@ -34,7 +35,6 @@ function Checkout() {
       [name]: value,
     }));
   };
-
 
   useEffect(() => {
     if (!token) return;
@@ -114,9 +114,8 @@ function Checkout() {
       }
     } catch (error) {
       if (error.response) {
-        console.error(error.response.data);
-      } else if (error.request) {
-        console.error("No response received:", error.request);
+        const apiErorrs = error.response.data.errors;
+        setDetailsSubmissionErorrs({ error: apiErorrs });
       } else {
         console.error("Error:", error.message);
       }
@@ -139,50 +138,85 @@ function Checkout() {
           <h2>Order details</h2>
           <form>
             <div className={styles.inputGroup}>
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={orderDetails.name}
-                onChange={(e) => handleInputChange(e)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Surname"
-                name="surname"
-                value={orderDetails.surname}
-                onChange={(e) => handleInputChange(e)}
-                required
-              />
+              <div className={styles.inputWrapper}>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  value={orderDetails.name}
+                  onChange={(e) => handleInputChange(e)}
+                  required
+                />
+                {detailsSubmissionErrors?.error?.name && (
+                  <p className={styles.validationErrorMsg}>
+                    {detailsSubmissionErrors?.error.name[0]}
+                  </p>
+                )}
+              </div>
+              <div className={styles.inputWrapper}>
+                <input
+                  type="text"
+                  placeholder="Surname"
+                  name="surname"
+                  value={orderDetails.surname}
+                  onChange={(e) => handleInputChange(e)}
+                  required
+                />
+                {detailsSubmissionErrors?.error?.surname && (
+                  <p className={styles.validationErrorMsg}>
+                    {detailsSubmissionErrors?.error.surname[0]}
+                  </p>
+                )}
+              </div>
             </div>
             <div className={styles.inputGroup}>
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={orderDetails.email}
-                onChange={(e) => handleInputChange(e)}
-                required
-              />
+              <div className={styles.emailInputWrapper}>
+                <input
+                  type="email"
+                  placeholder="✉️ Email"
+                  name="email"
+                  value={orderDetails.email}
+                  onChange={(e) => handleInputChange(e)}
+                  required
+                />
+                {detailsSubmissionErrors?.error?.email && (
+                  <p className={styles.validationErrorMsg}>
+                    {detailsSubmissionErrors?.error.email[0]}
+                  </p>
+                )}
+              </div>
             </div>
             <div className={styles.inputGroup}>
-              <input
-                type="text"
-                placeholder="Address"
-                name="address"
-                value={orderDetails.address}
-                onChange={(e) => handleInputChange(e)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Zip Code"
-                name="zip_code"
-                value={orderDetails.zip_code}
-                onChange={(e) => handleInputChange(e)}
-                required
-              />
+              <div className={styles.inputWrapper}>
+                <input
+                  type="text"
+                  placeholder="Address"
+                  name="address"
+                  value={orderDetails.address}
+                  onChange={(e) => handleInputChange(e)}
+                  required
+                />
+                {detailsSubmissionErrors?.error?.address && (
+                  <p className={styles.validationErrorMsg}>
+                    {detailsSubmissionErrors?.error.address[0]}
+                  </p>
+                )}
+              </div>
+              <div className={styles.inputWrapper} style={{width: "100%"}}>
+                <input
+                  type="text"
+                  placeholder="Zip Code"
+                  name="zip_code"
+                  value={orderDetails.zip_code}
+                  onChange={(e) => handleInputChange(e)}
+                  required
+                />
+                {detailsSubmissionErrors?.error?.zip_code && (
+                  <p className={styles.validationErrorMsg}>
+                    {detailsSubmissionErrors?.error.zip_code[0]}
+                  </p>
+                )}
+              </div>
             </div>
           </form>
         </div>

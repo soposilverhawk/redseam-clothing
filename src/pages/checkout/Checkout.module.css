@@ -30,7 +30,8 @@
   flex-direction: column;
   gap: 3.3rem;
   height: 80%;
-  width: 50%;
+  width: 100%;
+  max-width: 59.5rem;
   margin-left: 4.7rem;
 }
 .formWrapper h2 {
@@ -49,10 +50,6 @@
   border: 1px solid var(--secondary-gray);
   padding-left: 1.2rem
 }
-
-.inputGroup input[type="email"] {
-  width: 100%;
-}
 .cartInfoContainer {
   max-width: 46rem;
   width: 100%;
@@ -70,6 +67,15 @@
 
 .cartListWrapper::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
+}
+.validationErrorMsg {
+  margin-top: 1rem;
+  color: var(--primary-orange);
+  font-size: 1rem;
+}
+.emailInputWrapper,
+.emailInputWrapper input {
+  width: 100%;
 }
 
 
