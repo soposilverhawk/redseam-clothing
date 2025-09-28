@@ -48,24 +48,31 @@ function CartInfo({ isOpen, setIsCartOpen }) {
     return cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
   };
 
-  const removeItem = (id) => {
-    deleteFromCart({ productId: id })
+  const removeItem = (id, color, size) => {
+    deleteFromCart({ productId: id, color, size })
       .then(() => {
-        setCartItems((prev) => prev.filter((item) => item.id !== id));
+        setCartItems((prev) =>
+          prev.filter(
+            (item) =>
+              !(item.id === id && item.color === color && item.size === size)
+          )
+        );
       })
       .catch((err) => console.error("Failed to remove item:", err));
   };
 
-  const updateItemQty = (id, qty) => {
+  const updateItemQty = (id, color, size, qty) => {
     if (qty <= 0) {
-      removeItem(id);
+      removeItem(id, color, size);
       return;
     }
-    updateCart({ productId: id, quantity: qty })
+    updateCart({ productId: id, color, size, quantity: qty })
       .then(() => {
         setCartItems((prev) =>
           prev.map((item) =>
-            item.id === id ? { ...item, quantity: qty } : item
+            item.id === id && item.color === color && item.size === size
+              ? { ...item, quantity: qty }
+              : item
           )
         );
       })
@@ -140,7 +147,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                           <div className={styles.qtyButtonsContainer}>
                             <button
                               onClick={() =>
-                                updateItemQty(item.id, item.quantity - 1)
+                                updateItemQty(item.id, item.color, item.size, item.quantity - 1)
                               }
                             >
                               -
@@ -148,7 +155,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                             <span>{item.quantity}</span>
                             <button
                               onClick={() =>
-                                updateItemQty(item.id, item.quantity + 1)
+                                updateItemQty(item.id, item.color, item.size, item.quantity + 1)
                               }
                             >
                               +
@@ -157,7 +164,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
                           {/* item removal button */}
                           <button
                             className={styles.removeButton}
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(item.id, item.color, item.size)}
                           >
                             Remove
                           </button>

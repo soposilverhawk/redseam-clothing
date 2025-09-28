@@ -55,7 +55,7 @@ function useCart() {
     }
   };
 
-  const updateCart = async ({ productId, quantity }) => {
+  const updateCart = async ({ productId, quantity, color, size }) => {
     setLoading(true);
     setError(null);
 
@@ -64,6 +64,8 @@ function useCart() {
         `https://api.redseam.redberryinternship.ge/api/cart/products/${productId}`,
         {
           quantity,
+          color,
+          size,
         },
         {
           headers: {
@@ -81,7 +83,7 @@ function useCart() {
     }
   };
 
-  const deleteFromCart = async ({ productId }) => {
+  const deleteFromCart = async ({ productId, color, size }) => {
     setLoading(true);
     setError(null);
 
@@ -93,6 +95,7 @@ function useCart() {
             Accept: "application/json",
             Authorization: `Bearer ${token}`,
           },
+          data: { color, size },
         }
       );
       return response.data;
@@ -104,7 +107,14 @@ function useCart() {
     }
   };
 
-  return { getCartItems, addToCart, updateCart, deleteFromCart, loading, error };
+  return {
+    getCartItems,
+    addToCart,
+    updateCart,
+    deleteFromCart,
+    loading,
+    error,
+  };
 }
 
 export default useCart;
