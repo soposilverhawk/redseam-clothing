@@ -78,13 +78,8 @@
 .membershipMessage span:hover {
   text-decoration: underline;
 }
-.errorMsg {
-  color: red;
-  position: absolute;
-  bottom: -2rem;
-}
 .registrationErrorMsg {
   color: var(--primary-orange);
   font-size: 10px;
-  margin-top: 0.4rem;
+  margin-top: 1rem;
 }

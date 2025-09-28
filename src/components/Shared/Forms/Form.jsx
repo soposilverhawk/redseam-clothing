@@ -16,9 +16,8 @@ function Form({ variant }) {
     email: "",
     password: "",
   });
-  const [loginSubmittedData, setLoginSubmittedData] = useState(null);
+  const [loginErrors, setLoginErrors] = useState(null);
   const [registrationErrors, setRegistrationErrors] = useState(null);
-  const [validationErrors, setValidationErrors] = useState({});
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
@@ -52,44 +51,17 @@ function Form({ variant }) {
     }));
 
     setRegistrationErrors((prev) => {
-      if (!prev?.error?.[name]) return prev;
-      return {
-        error: {
-          ...prev.error,
-          [name]: undefined
-        }
-      }
-    })
-  };
-  const validateInputs = () => {
-    const errors = {};
-
-    if (!loginData.email || loginData.email.length < 3) {
-      errors.email = "Email must be at least 3 characters";
-    }
-
-    if (!loginData.password || loginData.password.length < 3) {
-      errors.password = "Password must be at least 3 characters";
-    }
-
-    if (registrationData.password !== registrationData.confirmPassword) {
-      errors.passwordMatch =
-        "Confirmation password does not match the password";
-    }
-
-    return errors;
+      setRegistrationErrors((prev) => {
+        if (!prev?.error) return null; // nothing to clear
+        const newErrors = { ...prev.error };
+        delete newErrors[name];
+        return { error: newErrors }; // always a new object
+      });
+    });
   };
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-
-    const errors = validateInputs();
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    setValidationErrors({});
 
     try {
       const response = await axios.post(
@@ -108,12 +80,11 @@ function Form({ variant }) {
 
       // SUCCESS
       login(response.data.user, response.data.token);
-      setLoginSubmittedData({ success: "Logged in successfully" });
       setLoginData({ email: "", password: "" });
-      navigate(ROUTES.HOME)
+      navigate(ROUTES.HOME);
     } catch (error) {
       if (error.response) {
-        setLoginSubmittedData({ error: error.response.data.message });
+        // setLoginSubmittedData({ error: error.response.data.message });
       } else {
         console.error("Error logging in:", error);
       }
@@ -123,13 +94,6 @@ function Form({ variant }) {
   const handleRegistrationSubmit = async (event) => {
     event.preventDefault();
 
-    const errors = validateInputs();
-    if (errors.passwordMatch) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    setValidationErrors({});
 
     const formData = new FormData();
     if (registrationData.avatar) {
@@ -150,9 +114,9 @@ function Form({ variant }) {
           },
         }
       );
-      
+
       // automatic login on successful registration
-      login(response.data.user, response.data.token)
+      login(response.data.user, response.data.token);
 
       setRegistrationData({
         avatar: null,
@@ -163,12 +127,12 @@ function Form({ variant }) {
       });
 
       // navigate user to products page after automatic login
-      navigate(ROUTES.HOME)
+      navigate(ROUTES.HOME);
     } catch (error) {
       if (error.response) {
         if (error.response) {
           const apiErrors = error.response.data.errors;
-          setRegistrationErrors({error: apiErrors})
+          setRegistrationErrors({ error: apiErrors });
         }
       } else {
         console.error("Error submitting registration:", error.message);
@@ -176,8 +140,8 @@ function Form({ variant }) {
     }
   };
   useEffect(() => {
-    console.log(registrationErrors)
-  }, [registrationErrors])
+    if (registrationErrors) console.log(registrationErrors);
+  }, [registrationErrors]);
   const renderForm = () => {
     switch (variant) {
       case "login":
@@ -199,9 +163,6 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Email <span className={styles.required}>*</span>
                 </span>
-                {validationErrors.email && (
-                  <p className={styles.errorMsg}>{validationErrors.email}</p>
-                )}
               </div>
 
               <div className={styles.inputWrapper}>
@@ -221,9 +182,6 @@ function Form({ variant }) {
                   className={styles.passwordVisibilityToggle}
                   onClick={() => togglePaswordVisibility("password")}
                 />
-                {validationErrors.password && (
-                  <p className={styles.errorMsg}>{validationErrors.password}</p>
-                )}
               </div>
               <ActionBtn size="small">Log in</ActionBtn>
             </form>
@@ -257,7 +215,11 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Username <span className={styles.required}>*</span>
                 </span>
-                {registrationErrors?.error?.username && <p className={styles.registrationErrorMsg}>{registrationErrors?.error?.username[0]}</p>}
+                {registrationErrors?.error?.username && (
+                  <p className={styles.registrationErrorMsg}>
+                    {registrationErrors?.error?.username[0]}
+                  </p>
+                )}
               </div>
               <div className={styles.inputWrapper}>
                 <input
@@ -271,7 +233,11 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Email <span className={styles.required}>*</span>
                 </span>
-                {registrationErrors?.error?.email && <p className={styles.registrationErrorMsg}>{registrationErrors?.error?.email[0]}</p>}
+                {registrationErrors?.error?.email && (
+                  <p className={styles.registrationErrorMsg}>
+                    {registrationErrors?.error?.email[0]}
+                  </p>
+                )}
               </div>
               <div className={styles.inputWrapper}>
                 <input
@@ -303,17 +269,16 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Confirm Password <span className={styles.required}>*</span>
                 </span>
-                 {registrationErrors?.error?.password && <p className={styles.registrationErrorMsg}>{registrationErrors?.error?.password[0]}</p>}
+                {registrationErrors?.error?.password && (
+                  <p className={styles.registrationErrorMsg}>
+                    {registrationErrors?.error?.password[0]}
+                  </p>
+                )}
                 <FontAwesomeIcon
                   icon={faEye}
                   className={styles.passwordVisibilityToggle}
                   onClick={() => togglePaswordVisibility("confirmPassword")}
                 />
-                {validationErrors.passwordMatch && (
-                  <p className={styles.errorMsg}>
-                    {validationErrors.passwordMatch}
-                  </p>
-                )}
               </div>
               <ActionBtn size="small">Register</ActionBtn>
             </form>
@@ -329,12 +294,6 @@ function Form({ variant }) {
     <div className={styles.formWrapper}>
       <h1>{variant === "login" ? "Log in" : "Registration"}</h1>
       {renderForm()}
-      {/* {loginSubmittedData?.error && (
-        <p className={styles.errorMsg}>{loginSubmittedData.error}</p>
-      )}
-      {loginSubmittedData?.success && (
-        <p className={styles.successMsg}>{loginSubmittedData.success}</p>
-      )} */}
     </div>
   );
 }
