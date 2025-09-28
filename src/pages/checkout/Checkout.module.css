@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 4.2rem;
   margin-top: 7.2rem;
+  position: relative;
 }
 .section h1 {
   font-size: var(--heading-lg);

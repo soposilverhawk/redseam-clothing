@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import useCart from "../../custom-hooks/useCart";
 import CartItemList from "../../components/Shared/Cart/CartItemList";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
+import PurchaseConfirmationModal from "../../components/purchaseConfirmationModal/PurchaseConfirmationModal";
 import axios from "axios";
 
 function Checkout() {
@@ -20,6 +21,8 @@ function Checkout() {
     zip_code: "",
   });
   const [isOrderDetailsSubmitted, setIsOrderDetailsSubmitted] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setOrderDetails((prev) => ({
@@ -102,7 +105,10 @@ function Checkout() {
         zip_code: "",
       });
       
-      if (response.status === 200) setIsOrderDetailsSubmitted(true);
+      if (response.status === 200) {
+        setIsOrderDetailsSubmitted(true);
+        setIsSuccessModalOpen(true);
+      }
     } catch (error) {
       if (error.response) {
         console.error(error.response.data);
@@ -115,6 +121,9 @@ function Checkout() {
   };
   return (
     <section className={styles.section}>
+      {isOrderDetailsSubmitted && isSuccessModalOpen && (
+        <PurchaseConfirmationModal setIsSuccessModalOpen={setIsSuccessModalOpen}/>
+      )}
       <h1>Checkout</h1>
       {/* content container */}
       <div className={styles.contentWrapper}>

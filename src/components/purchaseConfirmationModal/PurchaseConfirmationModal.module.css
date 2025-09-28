@@ -1,0 +1,45 @@
+.successWrapper {
+  position: absolute;
+  background-color: red;
+  width: 50%;
+  height: 59rem;
+  transform: translateX(50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.exitModalContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.exitModalContainer button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 3rem 3rem;
+}
+.successMsgContainer {
+  margin-top: 4.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.4rem;
+  color: var(--secondary-dark-blue);
+  margin-bottom: 7.4rem;
+}
+.successOutline {
+  width: 7.6rem;
+  height: 7.6rem;
+  background-color: var(--primary-gray);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.successMsgContainer h3 {
+  font-size: var(--heading-lg);
+  color: var(--primary-dark-blue);
+  font-weight: 600;
+  margin: 4rem 0 1.6rem 0;
+}
