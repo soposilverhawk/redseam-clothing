@@ -6,11 +6,10 @@ import styles from "./ProductPage.module.css";
 import useCart from "../../custom-hooks/useCart";
 import { useAuth } from "../../context/AuthContext";
 import ROUTES from "../../routes/Routes";
+import CartInfo from "../../components/Shared/Cart/CartInfo";
 
-function ProductPage() {
+function ProductPage({ openCart }) {
   // handle loading and error logic
-  // handle form functionality
-  // make the cart sidebar open right away when the product is added to the cart
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: product, loading, error } = useProducts({ id });
@@ -62,6 +61,7 @@ function ProductPage() {
         size: selectedSize,
         quantity: selectedQty,
       });
+      openCart();
     } catch (err) {
       alert("Failed to add to cart. Please try again.");
     }

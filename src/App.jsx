@@ -21,10 +21,14 @@ function App() {
     <ContentWrapper>
       <Header openCart={openCart} />
       <main>
-        <AppRoutes />
+        <AppRoutes openCart={() => setIsCartOpen(true)} />
       </main>
       {isCartOpen && <div className="overlay"></div>}
-      <CartInfo isOpen={isCartOpen} setIsCartOpen={setIsCartOpen} isEmpty={true}/>
+      <CartInfo
+        isOpen={isCartOpen}
+        setIsCartOpen={setIsCartOpen}
+        isEmpty={true}
+      />
     </ContentWrapper>
   ) : (
     <>
