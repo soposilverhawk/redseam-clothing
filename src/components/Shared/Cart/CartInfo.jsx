@@ -9,7 +9,6 @@ import useCart from "../../../custom-hooks/useCart";
 import { useAuth } from "../../../context/AuthContext";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
-  // handle case when quantity reaches 0 - the item should get removed from the cart
   const { token } = useAuth();
   const navigate = useNavigate();
   const { getCartItems, deleteFromCart, updateCart, loading, error } =
@@ -39,7 +38,10 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   }, [cartItems]);
 
   const calculateCartItemsTotalPrice = () => {
-    return cartItems.reduce((acc, curr) => acc + Number(curr.price) * Number(curr.quantity), 0);
+    return cartItems.reduce(
+      (acc, curr) => acc + Number(curr.price) * Number(curr.quantity),
+      0
+    );
   };
 
   const calculateToTalItems = () => {
@@ -54,7 +56,11 @@ function CartInfo({ isOpen, setIsCartOpen }) {
       .catch((err) => console.error("Failed to remove item:", err));
   };
 
- const updateItemQty = (id, qty) => {
+  const updateItemQty = (id, qty) => {
+    if (qty <= 0) {
+      removeItem(id);
+      return;
+    }
     updateCart({ productId: id, quantity: qty })
       .then(() => {
         setCartItems((prev) =>
@@ -86,7 +92,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
 
       {isOpen && (
         <div className={styles.sidebarContentWrapper}>
-          {(!loading && cartItems.length === 0 || !token) && (
+          {((!loading && cartItems.length === 0) || !token) && (
             <div className={styles.emptyCartMsgContainer}>
               <img src={emptyCartIcon} alt="empty cart icon" />
               <h4>Ooops!</h4>
