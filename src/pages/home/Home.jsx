@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/Routes";
 
 function Home() {
-  // handle edge case of user selecting only one filter instead of range
-  // handle loading and error logics for data
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
@@ -59,13 +57,13 @@ function Home() {
   const removeFilters = () => {
     setFiltersInput({
       priceFrom: "",
-      priceTo: ""
-    })
+      priceTo: "",
+    });
     setAppliedFilters({
       priceFrom: null,
-      priceTo: null
-    })
-  }
+      priceTo: null,
+    });
+  };
 
   return (
     <section className={styles.productsSection}>
@@ -112,9 +110,18 @@ function Home() {
         )}
         <div className={styles.productsAdditionalInfoContainer}>
           <h1>Products</h1>
-          {(appliedFilters.priceFrom !== null || appliedFilters.priceTo !== null) && (
+          {(appliedFilters.priceFrom !== null ||
+            appliedFilters.priceTo !== null) && (
             <div>
-              Price {appliedFilters.priceFrom ?? ""} - {appliedFilters.priceTo ?? ""}
+              Price{" "}
+              {appliedFilters.priceFrom != null &&
+              appliedFilters.priceFrom !== ""
+                ? appliedFilters.priceFrom
+                : "∞"}{" "}
+              -{" "}
+              {appliedFilters.priceTo != null && appliedFilters.priceTo !== ""
+                ? appliedFilters.priceTo
+                : "∞"}
               <button aria-label="Remove price filter" onClick={removeFilters}>
                 <img src={removeIcon} alt="" />
               </button>
@@ -134,7 +141,9 @@ function Home() {
             Filter
           </button>
           <select name="sorting" id="sorting" onChange={handleSortChange}>
-            <option value="" disabled selected>Sort by</option>
+            <option value="" disabled selected>
+              Sort by
+            </option>
             <option value="created_at">New products first</option>
             <option value="price">Price, low to high</option>
             <option value="-price">Price, high to low</option>
@@ -144,7 +153,10 @@ function Home() {
 
       <div className={styles.productsContainer}>
         {data?.data?.map(({ id, cover_image, name, description, price }) => (
-          <button key={id} onClick={() => navigate(ROUTES.PRODUCTPAGE.replace(":id", id))}>
+          <button
+            key={id}
+            onClick={() => navigate(ROUTES.PRODUCTPAGE.replace(":id", id))}
+          >
             <img src={cover_image} alt={description} />
             <div className={styles.productInformation}>
               {name}
