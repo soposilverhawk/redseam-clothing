@@ -1,4 +1,4 @@
-# Project Name - Designo Website
+# Project Name - RedSeam clothing
 This is a solution to the [Redberry Bootcamp ecommerce website - RedSeam Clothing]
 
 # The challenge
