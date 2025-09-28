@@ -1,6 +1,6 @@
 .successWrapper {
   position: absolute;
-  background-color: red;
+  background-color: var(--white);
   width: 50%;
   height: 59rem;
   transform: translateX(50%);

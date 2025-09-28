@@ -97,6 +97,8 @@ function Checkout() {
         }
       );
 
+      setCartItems([])
+
       setOrderDetails({
         name: "",
         surname: "",
@@ -122,7 +124,10 @@ function Checkout() {
   return (
     <section className={styles.section}>
       {isOrderDetailsSubmitted && isSuccessModalOpen && (
+        <>
+        <div className="overlay"></div>
         <PurchaseConfirmationModal setIsSuccessModalOpen={setIsSuccessModalOpen}/>
+        </>
       )}
       <h1>Checkout</h1>
       {/* content container */}
