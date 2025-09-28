@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import useCart from "../../custom-hooks/useCart";
 import CartItemList from "../../components/Shared/Cart/CartItemList";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
+import axios from "axios";
 
 function Checkout() {
   const { user, token } = useAuth();
@@ -70,6 +71,46 @@ function Checkout() {
         console.error("Failed to update item quantity:", err);
       });
   };
+  const submitOrderDetails = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", orderDetails.name);
+    formData.append("surname", orderDetails.surname);
+    formData.append("email", orderDetails.email);
+    formData.append("zip_code", orderDetails.zip_code);
+    formData.append("address", orderDetails.address);
+
+    try {
+      const response = await axios.post(
+        "https://api.redseam.redberryinternship.ge/api/cart/checkout",
+        formData,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setOrderDetails({
+        name: "",
+        surname: "",
+        email: user?.email || "",
+        address: "",
+        zip_code: "",
+      });
+      console.log(response);
+    } catch (error) {
+      if (error.response) {
+        console.error(error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
+    }
+  };
   return (
     <section className={styles.section}>
       <h1>Checkout</h1>
@@ -77,7 +118,7 @@ function Checkout() {
       <div className={styles.contentWrapper}>
         <div className={styles.formWrapper}>
           <h2>Order details</h2>
-          <form>
+          <form id="checkoutForm">
             <div className={styles.inputGroup}>
               <input
                 type="text"
@@ -129,14 +170,21 @@ function Checkout() {
         <div className={styles.cartInfoContainer}>
           <div className={styles.cartListWrapper}>
             <CartItemList
-            cartItems={cartItems}
-            loading={loading}
-            deliveryFee={deliveryFee}
-            updateItemQty={updateItemQty}
-            removeItem={removeItem}
-          />
+              cartItems={cartItems}
+              loading={loading}
+              deliveryFee={deliveryFee}
+              updateItemQty={updateItemQty}
+              removeItem={removeItem}
+            />
           </div>
-          <ActionBtn size="large" width="100%">Pay</ActionBtn>
+          <ActionBtn
+            size="large"
+            width="100%"
+            form="checkoutForm"
+            handleClick={(e) => submitOrderDetails(e)}
+          >
+            Pay
+          </ActionBtn>
         </div>
       </div>
     </section>
