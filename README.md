@@ -49,6 +49,7 @@ Working on the Redberry e-commerce webiste allowed me to gain hands-on experienc
 - Optimization of context usage (introducing more practical usage of context where necessary)
 - Handling loading states
 - Refactoring practices
+- Possibility to expand on using cookies
 
 
 # Authors
