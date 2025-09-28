@@ -7,6 +7,7 @@ import ROUTES from "../../../routes/Routes";
 import { useNavigate } from "react-router-dom";
 import useCart from "../../../custom-hooks/useCart";
 import { useAuth } from "../../../context/AuthContext";
+import CartItemList from "./CartItemList";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
   const { token } = useAuth();
@@ -36,13 +37,6 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems]);
-
-  const calculateCartItemsTotalPrice = () => {
-    return cartItems.reduce(
-      (acc, curr) => acc + Number(curr.price) * Number(curr.quantity),
-      0
-    );
-  };
 
   const calculateToTalItems = () => {
     return cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
@@ -84,7 +78,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   const goToCheckout = () => {
     setIsCartOpen(false);
     navigate(ROUTES.CHECKOUT);
-  }
+  };
 
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
@@ -99,9 +93,6 @@ function CartInfo({ isOpen, setIsCartOpen }) {
       </div>
 
       {/* Content */}
-      {loading && <p>Loading your cart...</p>}
-      {error && <p className="error">{error}</p>}
-
       {isOpen && (
         <div className={styles.sidebarContentWrapper}>
           {((!loading && cartItems.length === 0) || !token) && (
@@ -116,85 +107,14 @@ function CartInfo({ isOpen, setIsCartOpen }) {
           )}
 
           {!loading && cartItems.length > 0 && (
-            <>
-              <ul className={styles.cartList}>
-                {cartItems.map((item, idx) => {
-                  // Find the index of the selected color
-                  const colorIndex = item.available_colors.indexOf(item.color);
-
-                  // Get the corresponding image
-                  const imageForColor =
-                    colorIndex >= 0
-                      ? item.images[colorIndex]
-                      : item.cover_image;
-
-                  return (
-                    <li key={`cart-item-${idx + 1}`}>
-                      <img
-                        src={imageForColor}
-                        alt={`${item.name} in ${item.color}`}
-                      />
-                      <div className={styles.itemInfoWrapper}>
-                        {/* item info */}
-                        <div className={styles.itemInfoContainer}>
-                          <div>
-                            <p className={styles.itemName}>{item.name}</p>
-                            <p>{item.color}</p>
-                            <p>{item.size}</p>
-                          </div>
-                          <p className={styles.itemTotalPrice}>
-                            $ {Number(item.price) * Number(item.quantity)}
-                          </p>
-                        </div>
-                        {/* item controls */}
-                        <div className={styles.itemControlsContainer}>
-                          {/* quantity buttons */}
-                          <div className={styles.qtyButtonsContainer}>
-                            <button
-                              onClick={() =>
-                                updateItemQty(item.id, item.color, item.size, item.quantity - 1)
-                              }
-                            >
-                              -
-                            </button>
-                            <span>{item.quantity}</span>
-                            <button
-                              onClick={() =>
-                                updateItemQty(item.id, item.color, item.size, item.quantity + 1)
-                              }
-                            >
-                              +
-                            </button>
-                          </div>
-                          {/* item removal button */}
-                          <button
-                            className={styles.removeButton}
-                            onClick={() => removeItem(item.id, item.color, item.size)}
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-              <div className={styles.cartSummaryContainer}>
-                <div className={styles.summaryInformationContainer}>
-                  <p>Items subtotal</p>
-                  <span>$ {calculateCartItemsTotalPrice()}</span>
-                </div>
-                <div className={styles.summaryInformationContainer}>
-                  <p>Delivery</p>
-                  <span>$ {deliveryFee}</span>
-                </div>
-                <div className={styles.summaryInformationContainer}>
-                  <p>Total</p>
-                  <span>$ {calculateCartItemsTotalPrice() + deliveryFee}</span>
-                </div>
-                <ActionBtn size="large" handleClick={goToCheckout}>Go to checkout</ActionBtn>
-              </div>
-            </>
+            <CartItemList
+              cartItems={cartItems}
+              loading={loading}
+              deliveryFee={deliveryFee}
+              updateItemQty={updateItemQty}
+              removeItem={removeItem}
+              goToCheckout={goToCheckout}
+            />
           )}
         </div>
       )}
