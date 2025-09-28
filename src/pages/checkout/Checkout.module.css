@@ -47,10 +47,9 @@
   height: 4.2rem;
   border-radius: var(--btn-radius-sm);
   border: 1px solid var(--secondary-gray);
+  padding-left: 1.2rem
 }
-.inputGroup input::placeholder {
-  padding-left: 1.2rem;
-}
+
 .inputGroup input[type="email"] {
   width: 100%;
 }
