@@ -1,13 +1,16 @@
 {
   "name": "redseam-clothing",
   "private": true,
+  "homepage": "https://soposilverhawk.github.io/redseam-clothing/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
