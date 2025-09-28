@@ -16,7 +16,7 @@ function Form({ variant }) {
     email: "",
     password: "",
   });
-  const [loginErrors, setLoginErrors] = useState(null);
+  const [loginError, setLoginError] = useState(null);
   const [registrationErrors, setRegistrationErrors] = useState(null);
   const [showPassword, setShowPassword] = useState({
     password: false,
@@ -51,12 +51,10 @@ function Form({ variant }) {
     }));
 
     setRegistrationErrors((prev) => {
-      setRegistrationErrors((prev) => {
-        if (!prev?.error) return null; // nothing to clear
-        const newErrors = { ...prev.error };
-        delete newErrors[name];
-        return { error: newErrors }; // always a new object
-      });
+      if (!prev?.error) return null; // nothing to clear
+      const newErrors = { ...prev.error };
+      delete newErrors[name];
+      return { error: newErrors }; // always a new object
     });
   };
 
@@ -83,17 +81,12 @@ function Form({ variant }) {
       setLoginData({ email: "", password: "" });
       navigate(ROUTES.HOME);
     } catch (error) {
-      if (error.response) {
-        // setLoginSubmittedData({ error: error.response.data.message });
-      } else {
-        console.error("Error logging in:", error);
-      }
+      setLoginError(error);
     }
   };
 
   const handleRegistrationSubmit = async (event) => {
     event.preventDefault();
-
 
     const formData = new FormData();
     if (registrationData.avatar) {
@@ -177,6 +170,9 @@ function Form({ variant }) {
                 <span className={styles.placeholder}>
                   Password <span className={styles.required}>*</span>
                 </span>
+                {loginError && (
+                  <p className={styles.validationErrorMsg}>Incorrect email or password</p>
+                )}
                 <FontAwesomeIcon
                   icon={faEye}
                   className={styles.passwordVisibilityToggle}
@@ -216,7 +212,7 @@ function Form({ variant }) {
                   Username <span className={styles.required}>*</span>
                 </span>
                 {registrationErrors?.error?.username && (
-                  <p className={styles.registrationErrorMsg}>
+                  <p className={styles.validationErrorMsg}>
                     {registrationErrors?.error?.username[0]}
                   </p>
                 )}
@@ -234,7 +230,7 @@ function Form({ variant }) {
                   Email <span className={styles.required}>*</span>
                 </span>
                 {registrationErrors?.error?.email && (
-                  <p className={styles.registrationErrorMsg}>
+                  <p className={styles.validationErrorMsg}>
                     {registrationErrors?.error?.email[0]}
                   </p>
                 )}
@@ -270,7 +266,7 @@ function Form({ variant }) {
                   Confirm Password <span className={styles.required}>*</span>
                 </span>
                 {registrationErrors?.error?.password && (
-                  <p className={styles.registrationErrorMsg}>
+                  <p className={styles.validationErrorMsg}>
                     {registrationErrors?.error?.password[0]}
                   </p>
                 )}
