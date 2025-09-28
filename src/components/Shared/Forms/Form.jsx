@@ -139,7 +139,9 @@ function Form({ variant }) {
           },
         }
       );
-      console.log("Registration successful", response.data);
+      
+      // automatic login on successful registration
+      login(response.data.user, response.data.token)
 
       setRegistrationData({
         avatar: null,
@@ -148,6 +150,9 @@ function Form({ variant }) {
         password: "",
         confirmPassword: "",
       });
+
+      // navigate user to products page after automatic login
+      navigate(ROUTES.HOME)
     } catch (error) {
       if (error.response) {
         console.error("Registration failed:", error.response.data);
