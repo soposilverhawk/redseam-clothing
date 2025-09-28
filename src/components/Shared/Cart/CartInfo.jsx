@@ -6,10 +6,12 @@ import styles from "./CartInfo.module.css";
 import ROUTES from "../../../routes/Routes";
 import { useNavigate } from "react-router-dom";
 import useCart from "../../../custom-hooks/useCart";
+import { useAuth } from "../../../context/AuthContext";
 
 function CartInfo({ isOpen, setIsCartOpen }) {
   // handle case when quantity reaches 0 - the item should get removed from the cart
   // fix the issue with price sumarries becoming "NaN" when new quantity is added
+  const { token } = useAuth();
   const navigate = useNavigate();
   const { getCartItems, deleteFromCart, updateCart, loading, error } =
     useCart();
@@ -26,12 +28,12 @@ function CartInfo({ isOpen, setIsCartOpen }) {
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && token) {
       getCartItems()
         .then((data) => setCartItems(data))
         .catch((err) => console.error("Failed to fetch cart:", err));
     }
-  }, [isOpen]);
+  }, [isOpen, token]);
 
   useEffect(() => {
     console.log(cartItems);
@@ -87,7 +89,7 @@ function CartInfo({ isOpen, setIsCartOpen }) {
 
       {isOpen && (
         <div className={styles.sidebarContentWrapper}>
-          {!loading && cartItems.length === 0 && (
+          {(!loading && cartItems.length === 0 || !token) && (
             <div className={styles.emptyCartMsgContainer}>
               <img src={emptyCartIcon} alt="empty cart icon" />
               <h4>Ooops!</h4>
