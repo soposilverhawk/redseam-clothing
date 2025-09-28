@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useProducts from "../../custom-hooks/useProducts";
 import ActionBtn from "../../components/Shared/ActionBtn/ActionBtn";
 import styles from "./ProductPage.module.css";
 import useCart from "../../custom-hooks/useCart";
 import { useAuth } from "../../context/AuthContext";
+import ROUTES from "../../routes/Routes";
 
 function ProductPage() {
   // handle loading and error logic
   // handle form functionality
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data: product, loading, error } = useProducts({ id });
-  const {addToCart, loading: cartLoading, error: cartError} = useCart();
-  const {token} = useAuth();
+  const { addToCart, loading: cartLoading, error: cartError } = useCart();
+  const { token } = useAuth();
 
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
@@ -41,15 +43,15 @@ function ProductPage() {
     setSelectedSize(size);
   };
   const handleQtyChange = (event) => {
-    setSelectedQty(Number(event.target.value))
-  }
+    setSelectedQty(Number(event.target.value));
+  };
 
   const handleAddToCart = async (event) => {
     event.preventDefault();
 
     if (!token) {
-      alert("You need to log in to add products to your cart!");
-      return
+      navigate(ROUTES.LOGIN);
+      return;
     }
 
     try {
@@ -58,11 +60,11 @@ function ProductPage() {
         color: selectedColor,
         size: selectedSize,
         quantity: selectedQty,
-      })
+      });
     } catch (err) {
-      alert("Failed to add to cart. Please try again.")
+      alert("Failed to add to cart. Please try again.");
     }
-  }
+  };
 
   return (
     <section className={styles.section}>
