@@ -19,6 +19,7 @@ function Checkout() {
     address: "",
     zip_code: "",
   });
+  const [isOrderDetailsSubmitted, setIsOrderDetailsSubmitted] = useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setOrderDetails((prev) => ({
@@ -100,7 +101,8 @@ function Checkout() {
         address: "",
         zip_code: "",
       });
-      console.log(response);
+      
+      if (response.status === 200) setIsOrderDetailsSubmitted(true);
     } catch (error) {
       if (error.response) {
         console.error(error.response.data);
@@ -118,7 +120,7 @@ function Checkout() {
       <div className={styles.contentWrapper}>
         <div className={styles.formWrapper}>
           <h2>Order details</h2>
-          <form id="checkoutForm">
+          <form>
             <div className={styles.inputGroup}>
               <input
                 type="text"
@@ -180,7 +182,6 @@ function Checkout() {
           <ActionBtn
             size="large"
             width="100%"
-            form="checkoutForm"
             handleClick={(e) => submitOrderDetails(e)}
           >
             Pay
